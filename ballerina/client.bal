@@ -90,6 +90,12 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
+
+    # Fetch all lists
+    # 
+    # + headers - Headers to be sent with the request
+    # + queries - Queries to be sent with the request
+    # + return - successful operation
     resource isolated function get crm/v3/lists(map<string|string[]> headers = {}, *GetCrmV3Lists_getallQueries queries) returns ListsByIdResponse|error {
         string resourcePath = string `/crm/v3/lists/`;
         map<anydata> headerValues = {...headers};
@@ -213,6 +219,10 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # Creates a list
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - successful operation 
     resource isolated function post crm/v3/lists(ListCreateRequest payload, map<string|string[]> headers = {}) returns ListCreateResponse|error {
         string resourcePath = string `/crm/v3/lists/`;
         map<anydata> headerValues = {...headers};
