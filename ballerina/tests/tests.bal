@@ -14,9 +14,7 @@ OAuth2RefreshTokenGrantConfig auth = {
     credentialBearer: oauth2:POST_BODY_BEARER
 };
 
-final string serviceUrl = "https://api.hubapi.com";
-
-final Client hubspotClient = check new Client(config = {auth}, serviceUrl = serviceUrl);
+final Client hubspotClient = check new Client(config = {auth});
 
 string testListId = "";
 string testListName = "my-test-list";
@@ -30,7 +28,7 @@ function testCreateAList() returns error? {
         processingType: "MANUAL",
         name: testListName
     };
-    ListCreateResponse response = check hubspotClient->/crm/v3/lists.post(payload);
+    ListCreateResponse response = check hubspotClient->/.post(payload);
     testListId = response.list.listId;
     testListName = response.list.name;
     test:assertTrue(response.list.name == testListName);
@@ -40,7 +38,7 @@ function testCreateAList() returns error? {
 // Fetch Multiple Lists
 @test:Config{}
 function testGetAllLists() returns error? {
-    ListsByIdResponse response = check hubspotClient->/crm/v3/lists();
+    ListsByIdResponse response = check hubspotClient->/();
     test:assertTrue(response.lists.length() >= 0);
 }
 
@@ -50,7 +48,7 @@ function testGetAllLists() returns error? {
     dependsOn: [testCreateAList]
 }
 function testGetListByName() returns error? {
-    ListFetchResponse response = check hubspotClient->/crm/v3/lists/object\-type\-id/["0-1"]/name/[testListName]();
+    ListFetchResponse response = check hubspotClient->/object\-type\-id/["0-1"]/name/[testListName]();
     test:assertTrue(response.list.name == testListName);
 }
 
@@ -60,7 +58,7 @@ function testGetListByName() returns error? {
     dependsOn: [testCreateAList]
 }
 function testGetListById() returns error? {
-    ListFetchResponse response = check hubspotClient->/crm/v3/lists/[testListId]();
+    ListFetchResponse response = check hubspotClient->/[testListId]();
     test:assertTrue(response.list.name != "");
 }
 
@@ -71,7 +69,7 @@ function testSearchLists() returns error? {
     ListSearchRequest payload = {
         query: "test"
     };
-    ListSearchResponse response = check hubspotClient->/crm/v3/lists/search.post(payload);
+    ListSearchResponse response = check hubspotClient->/search.post(payload);
     io:println(response);
     test:assertTrue(response.lists.length() >= 0);
     if(response.lists.length() > 0) {
@@ -85,7 +83,7 @@ function testSearchLists() returns error? {
     dependsOn: [testCreateAList, testGetListById, testGetListByName]
 }
 function testDeleteListById() returns error? {
-    http:Response response = check  hubspotClient->/crm/v3/lists/[testListId].delete();
+    http:Response response = check  hubspotClient->/[testListId].delete();
     test:assertTrue(response.statusCode == 204);
 }
 
@@ -95,14 +93,14 @@ function testDeleteListById() returns error? {
     dependsOn: [testCreateAList, testDeleteListById]
 }
 function testRestoreListById() returns error? {
-    http:Response response = check hubspotClient->/crm/v3/lists/[testListId]/restore.put();
+    http:Response response = check hubspotClient->/[testListId]/restore.put();
     test:assertTrue(response.statusCode == 204);
 }
 
 
 @test:AfterSuite
 function deleteTestList() returns error? {
-    http:Response response = check  hubspotClient->/crm/v3/lists/[testListId].delete();
+    http:Response response = check  hubspotClient->/[testListId].delete();
     test:assertTrue(response.statusCode == 204);
 }
 
