@@ -21,6 +21,7 @@ final Client hubspotClient = check new Client(config = {auth}, serviceUrl = serv
 string testListId = "";
 string testListName = "my-test-list";
 
+
 // Create List
 @test:Config{}
 function testCreateAList() returns error? {
@@ -35,12 +36,14 @@ function testCreateAList() returns error? {
     test:assertTrue(response.list.name == testListName);
 }
 
+
 // Fetch Multiple Lists
 @test:Config{}
 function testGetAllLists() returns error? {
     ListsByIdResponse response = check hubspotClient->/crm/v3/lists();
     test:assertTrue(response.lists.length() >= 0);
 }
+
 
 // Fetch List by Name
 @test:Config{
@@ -50,6 +53,7 @@ function testGetListByName() returns error? {
     ListFetchResponse response = check hubspotClient->/crm/v3/lists/object\-type\-id/["0-1"]/name/[testListName]();
     test:assertTrue(response.list.name == testListName);
 }
+
 
 // Fetch List by ID
 @test:Config{
@@ -75,6 +79,7 @@ function testSearchLists() returns error? {
     }
 }
 
+
 // Delete a List
 @test:Config{
     dependsOn: [testCreateAList, testGetListById, testGetListByName]
@@ -84,12 +89,20 @@ function testDeleteListById() returns error? {
     test:assertTrue(response.statusCode == 204);
 }
 
+
 // Restore a List
 @test:Config{
     dependsOn: [testCreateAList, testDeleteListById]
 }
 function testRestoreListById() returns error? {
     http:Response response = check hubspotClient->/crm/v3/lists/[testListId]/restore.put();
+    test:assertTrue(response.statusCode == 204);
+}
+
+
+@test:AfterSuite
+function deleteTestList() returns error? {
+    http:Response response = check  hubspotClient->/crm/v3/lists/[testListId].delete();
     test:assertTrue(response.statusCode == 204);
 }
 
