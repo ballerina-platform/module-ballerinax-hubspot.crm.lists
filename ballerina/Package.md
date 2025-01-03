@@ -1,13 +1,10 @@
 ## Overview
 
-[//]: # (TODO: Add overview mentioning the purpose of the module, supported REST API versions, and other high-level details.)
-[HubSpot](https://www.hubspot.com/) is an customer platform with all the software, integrations, and resources users need to connect thier marketing, sales, and customer service.
+[HubSpot](https://www.hubspot.com/) is an AI-powered customer relationship management (CRM) platform. 
 
-The `ballerinax/hubspot.crm.lists` package offers APIs to connect and interact with [HubSpot API for CRM Lists](https://developers.hubspot.com/docs/reference/api/crm/lists) endpoints, specifically based on [HubSpot CRM Lists API v3 OpenAPI spec](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Lists/Rollouts/144891/v3/lists.json).
+The ballerinax/hubspot.crm.lists offers APIs to connect and interact with the [HubSpot CRM Lists API](https://developers.hubspot.com/docs/reference/api/crm/lists) endpoints, specifically based on the [HubSpot CRM Lists API v3 OpenAPI specification](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Lists/Rollouts/144891/v3/lists.json)
 
 ## Setup guide
-
-[//]: # (TODO: Add detailed steps to obtain credentials and configure the module.)
 
 To use the HubSpot CRM Lists connector, you must have access to the HubSpot API through a HubSpot developer account and a HubSpot App under it. Therefore you need to register for a developer account at HubSpot if you don't have one already.
 
@@ -127,8 +124,6 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 5. Store the access token securely for use in your application.
 
 ## Quickstart
-
-[//]: # "TODO: Add a quickstart guide to demonstrate a basic functionality of the module, including sample code snippets."
 
 To use the `HubSpot CRM Lists` connector in your Ballerina application, update the `.bal` file as follows:
 
