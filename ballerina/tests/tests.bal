@@ -260,3 +260,4 @@ function deleteTestListAfterRestore() returns error? {
     http:Response responseDynamic = check  hubspotClient->/[testDynamicListId].delete();
     test:assertTrue(response.statusCode == 204 && responseDynamic.statusCode == 204);
 }
+
