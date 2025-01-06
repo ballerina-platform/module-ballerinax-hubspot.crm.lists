@@ -385,10 +385,10 @@ public type PublicWebinarFilter record {
 
 public type MembershipsUpdateResponse record {
     # The IDs of the records that were `removed` from the list.
-    string[] recordIdsRemoved;
-    string[] recordsIdsAdded;
+    string[] recordIdsRemoved?;
+    string[] recordsIdsAdded?;
     # The IDs of the records that were `missing` (e.g. did not exist in the portal) and so were not `added` or `removed`.
-    string[] recordIdsMissing;
+    string[] recordIdsMissing?;
 };
 
 public type ListCreateResponse record {

@@ -16,8 +16,8 @@ These changes are done in order to improve the overall usability, and as workaro
     - **Reason**: Centralizes the versioning to the base URL, which is a common best practice.
 
 2. **Update API Paths**:
-    - **Original**: path includes `/crm/v3/lists` prefix in each end points (e.g., `/crm/v3/lists/search`).
-    - **Updated**: Paths are modified to remove the prefix from the endpoints, as it is now included in the base URL. For example:
+    - **Original**: Paths shared a common segment across all resource endpoints.
+    - **Updated**: Common paths segment is removed from the resource endpoints, as it is now included in the base URL. For example:
         - **Original**: `/crm/v3/lists/search`
         - **Updated**: `/search`
     - **Reason**: Simplifies the API paths, making them shorter and more readable.
