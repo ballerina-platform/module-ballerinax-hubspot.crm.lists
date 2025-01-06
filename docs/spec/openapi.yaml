@@ -1695,7 +1695,7 @@
           "filtersUpdatedAt" : {
             "type" : "string",
             "description" : "The time when the filters for this list were last updated.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "listId" : {
             "type" : "string",
@@ -1704,7 +1704,7 @@
           "createdAt" : {
             "type" : "string",
             "description" : "The time when the list was created.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "processingStatus" : {
             "type" : "string",
@@ -1713,7 +1713,7 @@
           "deletedAt" : {
             "type" : "string",
             "description" : "The time when the list was deleted.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "listVersion" : {
             "type" : "integer",
@@ -1738,7 +1738,7 @@
           "updatedAt" : {
             "type" : "string",
             "description" : "The time the list was last updated.",
-            "format" : "date-time"
+            "format" : "datetime"
           }
         }
       },
@@ -2476,7 +2476,6 @@
         }
       },
       "MembershipsUpdateResponse" : {
-        "required" : [ "recordIdsMissing", "recordIdsRemoved", "recordsIdsAdded" ],
         "type" : "object",
         "properties" : {
           "recordIdsRemoved" : {
@@ -2657,7 +2656,7 @@
           "filtersUpdatedAt" : {
             "type" : "string",
             "description" : "The time when the filters for this list were last updated.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "listId" : {
             "type" : "string",
@@ -2666,7 +2665,7 @@
           "createdAt" : {
             "type" : "string",
             "description" : "The time when the list was created.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "processingStatus" : {
             "type" : "string",
@@ -2675,7 +2674,7 @@
           "deletedAt" : {
             "type" : "string",
             "description" : "The time when the list was deleted.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "listVersion" : {
             "type" : "integer",
@@ -2716,7 +2715,7 @@
           "updatedAt" : {
             "type" : "string",
             "description" : "The time the list was last updated.",
-            "format" : "date-time"
+            "format" : "datetime"
           }
         }
       },
@@ -2733,11 +2732,11 @@
           },
           "lastAddedTimestamp" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "firstAddedTimestamp" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "datetime"
           }
         }
       },
@@ -2850,7 +2849,7 @@
           "createdAt" : {
             "type" : "string",
             "description" : "The time the folder was created at.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "parentFolderId" : {
             "type" : "integer",
@@ -2883,7 +2882,7 @@
           "updatedContentsAt" : {
             "type" : "string",
             "description" : "The time that the contents of the folder was last updated at.",
-            "format" : "date-time"
+            "format" : "datetime"
           },
           "userId" : {
             "type" : "integer",
@@ -2893,7 +2892,7 @@
           "updatedAt" : {
             "type" : "string",
             "description" : "The time the folder was last updated at.",
-            "format" : "date-time"
+            "format" : "datetime"
           }
         }
       },
@@ -4200,7 +4199,7 @@
           },
           "membershipTimestamp" : {
             "type" : "string",
-            "format" : "date-time"
+            "format" : "datetime"
           }
         }
       },

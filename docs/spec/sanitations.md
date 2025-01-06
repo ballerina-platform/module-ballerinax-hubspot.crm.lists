@@ -22,6 +22,28 @@ These changes are done in order to improve the overall usability, and as workaro
         - **Updated**: `/search`
     - **Reason**: Simplifies the API paths, making them shorter and more readable.
 
+3. **Change the data format of DateTime Variables in schemas**
+    - **Original**: `"format" : "date-time"`
+    - **Updated**: `"format" : "datetime"`
+    - **Reason**: `date-time` data format is not supported in Ballerina, hence it is converted into a string by default. `datetime` format supports Ballerina language.
+
+4. **Changing required fields of `MembershipsUpdateResponse` schema**
+    - **Original**:
+    ```
+    "MembershipsUpdateResponse" : {
+        "required" : [ "recordIdsMissing", "recordIdsRemoved", "recordsIdsAdded" ],
+        "type" : "object",
+        ...
+    ```
+    - **Updated**:
+    ```
+    "MembershipsUpdateResponse" : {
+        "type" : "object",
+        ...
+    ```
+    - **Reason**: Although the API specifications says these feilds are required, the endpoint does not return all three fields `recordIdsMissing`, `recordIdsRemoved`, `recordsIdsAdded` for every request. This leads to a Payload Binding Error (`PayloadBindingClientError`). Removing these from required list ensures correct generation of connector client.
+
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
@@ -30,3 +52,4 @@ The following command was used to generate the Ballerina client from the OpenAPI
 bal openapi -i docs/spec/openapi.json --mode client --license docs/license.txt -o ballerina
 ```
 Note: The license year is hardcoded to 2024, change if necessary.
+
