@@ -26,17 +26,17 @@ Within app developer accounts, you can create developer test accounts to test ap
 
 2. Click Create developer test account.
 
-   <img src=../docs/setup/resources/test_acc_2.png alt="Hubspot developer testacc" style="width: 70%;">
+   <img src=../docs/setup/resources/test_acc_2.png alt="Creating a hubspot test account" style="width: 70%;">
 
 3. In the dialogue box, give a name to your test account and click create.
 
-   <img src=../docs/setup/resources/test_acc_3.png alt="Hubspot developer testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/test_acc_3.png alt="Adding a name and description for the test account" style="width: 70%;">
 
 ### Step 3: Create a HubSpot App under your account.
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
 
-   <img src=../docs/setup/resources/create_app_1.png alt="Hubspot app creation 1 testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/create_app_1.png alt="Creating a new App" style="width: 70%;">
 
 2. Provide the necessary details, including the app name and description.
 
@@ -44,7 +44,7 @@ Within app developer accounts, you can create developer test accounts to test ap
 
 1. Move to the Auth Tab.
 
-   <img src=../docs/setup/resources/create_app_2.png alt="Hubspot app creation 2 testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/create_app_2.png alt="Selecting the Auth tab" style="width: 70%;">
 
 2. In the Scopes section, add the following scopes for your app using the "Add new scope" button.
 
@@ -54,17 +54,19 @@ Within app developer accounts, you can create developer test accounts to test ap
 
    `cms.membership.access_groups.write`
 
-   <img src=../docs/setup/resources/scope_set.png alt="Hubspot app creation 1 testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/scope_set.png alt="List of scopes" style="width: 70%;">
 
-4. Add your Redirect URI in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
+   Scopes listed above are the mandotory scopes needed to use the HubSpot CRM Lists API. However you may need to add additional scopes based on your usecase. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
 
-   <img src=../docs/setup/resources/create_app_final.png alt="Hubspot app creation 1 testacc3" style="width: 70%;">
+3. Add your Redirect URI in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
+
+   <img src=../docs/setup/resources/create_app_final.png alt="Adding the redirect URI and save" style="width: 70%;">
 
 ### Step 5: Get your Client ID and Client Secret
 
 - Navigate to the Auth section of your app. Make sure to save the provided Client ID and Client Secret.
 
-   <img src=../docs/setup/resources/get_credentials.png alt="Hubspot app creation 1 testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/get_credentials.png alt="Client ID and secret of the App" style="width: 70%;">
 
 ### Step 6: Setup Authentication Flow
 
@@ -80,9 +82,9 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
     **_NOTE: If you are using a localhost redirect url, make sure to have a listner running at the relevant port before executing the next step. You can use [this gist](https://gist.github.com/lnash94/0af47bfcb7cc1e3d59e06364b3c86b59) and run it using `bal run`. Alternatively, you can use any other method to bind a listner to the port._**
 
-2. Paste it in the browser and select your developer test account to intall the app when prompted.
+2. Paste it in the browser and select your developer test account to intall the app when prompted. Provide consent for all scopes needed.
 
-   <img src=../docs/setup/resources/install_app.png alt="Hubspot app creation 1 testacc3" style="width: 70%;">
+   <img src=../docs/setup/resources/install_app.png alt="Selecting the App for OAuth process" style="width: 70%;">
 
 3. A code will be displayed in the browser. Copy the code.
 
