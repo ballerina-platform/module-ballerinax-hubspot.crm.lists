@@ -25,7 +25,7 @@ These changes are done in order to improve the overall usability, and as workaro
 3. **Change the data format of DateTime Variables in schemas**
     - **Original**: `"format" : "date-time"`
     - **Updated**: `"format" : "datetime"`
-    - **Reason**: `date-time` data format is not supported in Ballerina, hence it is converted into a string by default. `datetime` format supports Ballerina language.
+    - **Reason**: `date-time` data format is not supported in Ballerina, hence it is converted into a string by default. Changing this to `datetime` which is supported by Ballerina, resolves this issue.
 
 4. **Changing required fields of `MembershipsUpdateResponse` schema**
     - **Original**:
@@ -49,7 +49,7 @@ These changes are done in order to improve the overall usability, and as workaro
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
 
 ```bash
-bal openapi -i docs/spec/openapi.json --mode client --license docs/license.txt -o ballerina
+bal openapi -i docs/spec/openapi.json --mode client --client-methods remote --license docs/license.txt -o ballerina
 ```
 Note: The license year is hardcoded to 2024, change if necessary.
 
