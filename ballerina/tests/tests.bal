@@ -183,7 +183,7 @@ function testUpdateListFilter() returns error? {
         filterBranch
     };
 
-    ListUpdateResponse response = check hubspotClient->putListidUpdateListFilters_updatelistfilters(listId=testDynamicListId, payload=payload);
+    ListUpdateResponse response = check hubspotClient->putListidUpdateListFilters_updatelistfilters(listId = testDynamicListId, payload = payload);
     test:assertEquals(response.updatedList?.filterBranch, filterBranch);
 }
 
@@ -318,18 +318,14 @@ function testRenameAFolder() returns error? {
 }
 
 // Retrieves a folder
-// 
-//  TODO: method call gives an error:
-//        client resource access action is not yet supported when the corresponding resource method is ambiguous
-// 
-@test:Config{
-    dependsOn: [ testRenameAFolder]
+@test:Config {
+    dependsOn: [testRenameAFolder]
 }
 function testRetrieveAFolder() returns error? {
     GetFolders_getallQueries queries = {
         folderId: testChildFolderId.toString()
     };
-    ListFolderFetchResponse response = check hubspotClient->getFolders_getall(queries=queries);
+    ListFolderFetchResponse response = check hubspotClient->getFolders_getall(queries = queries);
     test:assertTrue(response.folder.name == "test-child-folder-updated");
 }
 
