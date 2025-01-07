@@ -88,7 +88,7 @@ public type ListSearchRequest record {
     string sort?;
 };
 
-# Represents the Queries record for the operation: put-/folders/{folderId}/rename_rename
+# Represents the Queries record for the operation: putFoldersFolderidRename_rename
 public type PutFoldersFolderidRename_renameQueries record {
     # 
     string newFolderName?;
@@ -112,7 +112,7 @@ public type ListSearchResponse record {
     boolean hasMore;
 };
 
-# Represents the Queries record for the operation: get-/{listId}/memberships/join-order_getPageOrderedByAddedToListDate
+# Represents the Queries record for the operation: getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate
 public type GetListidMembershipsJoinOrder_getpageorderedbyaddedtolistdateQueries record {
     # The paging offset token for the page that comes `before` the previously requested records.
     # 
@@ -185,7 +185,7 @@ public type PublicObjectListSearchResult record {
     string updatedAt?;
 };
 
-# Represents the Queries record for the operation: get-/{listId}/memberships_getPage
+# Represents the Queries record for the operation: getListidMemberships_getpage
 public type GetListidMemberships_getpageQueries record {
     # The paging offset token for the page that comes `before` the previously requested records.
     # 
@@ -565,13 +565,13 @@ public type PreviousPage record {
     string link?;
 };
 
-# Represents the Queries record for the operation: get-/folders_getAll
+# Represents the Queries record for the operation: getFolders_getall
 public type GetFolders_getallQueries record {
     # The Id of the folder to retrieve.
     string folderId = "0";
 };
 
-# Represents the Queries record for the operation: get-/{listId}_getById
+# Represents the Queries record for the operation: getListid_getbyid
 public type GetListid_getbyidQueries record {
     # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
     boolean includeFilters = false;
@@ -596,7 +596,7 @@ public type PublicAbsoluteRangedTimestampRefineBy record {
     "ABSOLUTE_RANGED" 'type;
 };
 
-# Represents the Queries record for the operation: put-/{listId}/update-list-name_updateName
+# Represents the Queries record for the operation: putListidUpdateListName_updatename
 public type PutListidUpdateListName_updatenameQueries record {
     # The name to update the list to.
     string listName?;
@@ -649,7 +649,7 @@ public type PublicCalendarDatePropertyOperation record {
     string timeUnit;
 };
 
-# Represents the Queries record for the operation: get-/object-type-id/{objectTypeId}/name/{listName}_getByName
+# Represents the Queries record for the operation: getObjectTypeIdObjecttypeidNameListname_getbyname
 public type GetObjectTypeIdObjecttypeidNameListname_getbynameQueries record {
     # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
     boolean includeFilters = false;
@@ -802,7 +802,7 @@ public type JoinTimeAndRecordId record {
     string membershipTimestamp;
 };
 
-# Represents the Queries record for the operation: get-/idmapping_translateLegacyListIdToListId
+# Represents the Queries record for the operation: getIdmapping_translatelegacylistidtolistid
 public type GetIdmapping_translatelegacylistidtolistidQueries record {
     # The legacy list id from lists v1 API.
     string legacyListId?;
@@ -824,7 +824,7 @@ public type PublicMonthReference record {
     int:Signed32 second?;
 };
 
-# Represents the Queries record for the operation: get-/_getAll
+# Represents the Queries record for the operation: get_getall
 public type Get_getallQueries record {
     # The **ILS IDs** of the lists to fetch.
     string[] listIds?;
@@ -852,7 +852,7 @@ public type PublicCampaignInfluencedFilter record {
     "CAMPAIGN_INFLUENCED" filterType;
 };
 
-# Represents the Queries record for the operation: put-/{listId}/update-list-filters_updateListFilters
+# Represents the Queries record for the operation: putListidUpdateListFilters_updatelistfilters
 public type PutListidUpdateListFilters_updatelistfiltersQueries record {
     # A flag indicating whether or not the memberships added to the list as a result of the filter change should be enrolled in workflows that are relevant to this list.
     boolean enrollObjectsInWorkflows = false;

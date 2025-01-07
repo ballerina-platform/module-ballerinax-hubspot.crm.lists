@@ -29,7 +29,7 @@ function testCreateAManualList() returns error? {
         processingType: "MANUAL",
         name: testListName
     };
-    ListCreateResponse response = check hubspotClient->/.post(payload);
+    ListCreateResponse response = check hubspotClient->post_create(payload);
     testListId = response.list.listId;
     testListName = response.list.name;
     test:assertTrue(response.list.name == testListName);
@@ -67,7 +67,7 @@ function testCreateADynamicList() returns error? {
         name: "my-test-list-dynamic",
         filterBranch: filterBranch
     };
-    ListCreateResponse response = check hubspotClient->/.post(payload);
+    ListCreateResponse response = check hubspotClient->post_create(payload);
     testDynamicListId = response.list.listId;
     test:assertTrue(response.list.name == "my-test-list-dynamic");
 }
@@ -75,7 +75,7 @@ function testCreateADynamicList() returns error? {
 // Fetch Multiple Lists
 @test:Config {}
 function testGetAllLists() returns error? {
-    ListsByIdResponse response = check hubspotClient->/();
+    ListsByIdResponse response = check hubspotClient->get_getall();
     test:assertTrue(response.lists.length() >= 0);
 }
 
@@ -84,7 +84,7 @@ function testGetAllLists() returns error? {
     dependsOn: [testCreateAManualList]
 }
 function testGetListByName() returns error? {
-    ListFetchResponse response = check hubspotClient->/object\-type\-id/["0-1"]/name/[testListName]();
+    ListFetchResponse response = check hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(listName = testListName, objectTypeId = "0-1");
     test:assertTrue(response.list.name == testListName);
 }
 
@@ -93,7 +93,7 @@ function testGetListByName() returns error? {
     dependsOn: [testCreateAManualList]
 }
 function testGetListById() returns error? {
-    ListFetchResponse response = check hubspotClient->/[testListId]();
+    ListFetchResponse response = check hubspotClient->getListid_getbyid(listId = testListId);
     test:assertTrue(response.list.name != "");
 }
 
@@ -103,7 +103,7 @@ function testSearchLists() returns error? {
     ListSearchRequest payload = {
         query: "test"
     };
-    ListSearchResponse response = check hubspotClient->/search.post(payload);
+    ListSearchResponse response = check hubspotClient->postSearch_dosearch(payload);
     test:assertTrue(response.lists.length() >= 0);
     if (response.lists.length() > 0) {
         test:assertTrue(response.lists[0].name.includes("test"));
@@ -115,7 +115,7 @@ function testSearchLists() returns error? {
     dependsOn: [testCreateAManualList, testGetListById, testGetListByName]
 }
 function testDeleteListById() returns error? {
-    http:Response response = check hubspotClient->/[testListId].delete();
+    http:Response response = check hubspotClient->deleteListid_remove(listId = testListId);
     test:assertTrue(response.statusCode == 204);
 }
 
@@ -124,7 +124,7 @@ function testDeleteListById() returns error? {
     dependsOn: [testCreateAManualList, testDeleteListById]
 }
 function testRestoreListById() returns error? {
-    http:Response response = check hubspotClient->/[testListId]/restore.put();
+    http:Response response = check hubspotClient->putListidRestore_restore(listId = testListId);
     test:assertTrue(response.statusCode == 204);
 }
 
@@ -136,7 +136,7 @@ function testUpdateListName() returns error? {
     PutListidUpdateListName_updatenameQueries queries = {
         listName: "my-test-list-updated"
     };
-    ListUpdateResponse response = check hubspotClient->/[testListId]/update\-list\-name.put(queries = queries);
+    ListUpdateResponse response = check hubspotClient->putListidUpdateListName_updatename(listId = testListId, queries = queries);
     test:assertTrue(response.updatedList?.name == "my-test-list-updated");
 }
 
@@ -183,7 +183,7 @@ function testUpdateListFilter() returns error? {
         filterBranch
     };
 
-    ListUpdateResponse response = check hubspotClient->/[testDynamicListId]/update\-list\-filters.put(payload);
+    ListUpdateResponse response = check hubspotClient->putListidUpdateListFilters_updatelistfilters(listId=testDynamicListId, payload=payload);
     test:assertEquals(response.updatedList?.filterBranch, filterBranch);
 }
 
@@ -192,7 +192,7 @@ function testUpdateListFilter() returns error? {
     dependsOn: [testRestoreListById]
 }
 function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
-    ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->/[testListId]/memberships/join\-order();
+    ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(listId = testListId);
     test:assertTrue(response.results.length() >= 0);
 }
 
@@ -201,14 +201,14 @@ function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
     dependsOn: [testRestoreListById]
 }
 function testFetchListMembershipsOrderedById() returns error? {
-    ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->/[testListId]/memberships();
+    ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMemberships_getpage(listId = testListId);
     test:assertTrue(response.results.length() >= 0);
 };
 
 // Get lists record is member of
 @test:Config {}
 function testGetListsRecordIsMemberOf() returns error? {
-    ApiCollectionResponseRecordListMembershipNoPaging response = check hubspotClient->/records/["0-1"]/["123123"]/memberships();
+    ApiCollectionResponseRecordListMembershipNoPaging response = check hubspotClient->getRecordsObjecttypeidRecordidMemberships_getlists(objectTypeId = "0-1", recordId = "123456");
     int total = response.total ?: 0;
     test:assertEquals(response.results.length(), total);
 }
@@ -218,7 +218,7 @@ function testGetListsRecordIsMemberOf() returns error? {
     dependsOn: [testRestoreListById, testCreateADynamicList]
 }
 function testAddAllRecordsFromSourceListToDestinationList() returns error? {
-    http:Response response = check hubspotClient->/[testListId]/memberships/add\-from/[testDynamicListId].put();
+    http:Response response = check hubspotClient->putListidMembershipsAddFromSourcelistid_addallfromlist(listId = testListId, sourceListId = testDynamicListId);
     test:assertTrue(response.statusCode == 204);
 }
 
@@ -231,7 +231,7 @@ function testAddRemoveRecordsFromAList() returns error? {
         recordIdsToAdd: ["123123", "123456"],
         recordIdsToRemove: ["456456"]
     };
-    MembershipsUpdateResponse response = check hubspotClient->/[testListId]/memberships/add\-and\-remove.put(payload);
+    MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsAddAndRemove_addandremove(listId = testListId, payload = payload);
     test:assertTrue(response.recordIdsMissing !is () || response.recordsIdsAdded !is ());
 }
 
@@ -241,7 +241,7 @@ function testAddRemoveRecordsFromAList() returns error? {
 }
 function testAddRecordsToAList() returns error? {
     string[] payload = ["123123", "123456"];
-    MembershipsUpdateResponse response = check hubspotClient->/[testListId]/memberships/add.put(payload);
+    MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsAdd_add(listId = testListId, payload = payload);
     test:assertTrue(response.recordIdsMissing !is () || response.recordsIdsAdded !is ());
 }
 
@@ -251,7 +251,7 @@ function testAddRecordsToAList() returns error? {
 }
 function testRemoveRecordsFromList() returns error? {
     string[] payload = ["123123"];
-    MembershipsUpdateResponse response = check hubspotClient->/[testListId]/memberships/remove.put(payload);
+    MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsRemove_remove(listId = testListId, payload = payload);
     test:assertTrue(response.recordIdsMissing !is () || response.recordIdsRemoved !is ());
 }
 
@@ -260,7 +260,7 @@ function testRemoveRecordsFromList() returns error? {
     dependsOn: [testRestoreListById]
 }
 function testDeleteAllRecordsFromList() returns error? {
-    http:Response response = check hubspotClient->/[testListId]/memberships.delete();
+    http:Response response = check hubspotClient->deleteListidMemberships_removeall(listId = testListId);
     test:assertTrue(response.statusCode == 204);
 }
 
@@ -270,7 +270,7 @@ function testCreateFolders() returns error? {
     ListFolderCreateRequest payload = {
         name: "test-folder"
     };
-    ListFolderCreateResponse response = check hubspotClient->/folders.post(payload);
+    ListFolderCreateResponse response = check hubspotClient->postFolders_create(payload);
     test:assertTrue(response.folder.name == "test-folder");
     testParentFolderId = response.folder.id;
 
@@ -278,7 +278,7 @@ function testCreateFolders() returns error? {
         name: "test-child-folder",
         parentFolderId: testParentFolderId.toString()
     };
-    ListFolderCreateResponse childResponse = check hubspotClient->/folders.post(childPayload);
+    ListFolderCreateResponse childResponse = check hubspotClient->postFolders_create(childPayload);
     test:assertTrue(childResponse.folder.name == "test-child-folder");
     testChildFolderId = childResponse.folder.id;
 }
@@ -288,7 +288,7 @@ function testCreateFolders() returns error? {
     dependsOn: [testCreateFolders]
 }
 function testMoveAFolder() returns error? {
-    ListFolderFetchResponse response = check hubspotClient->/folders/[testChildFolderId.toString()]/move/["0"].put();
+    ListFolderFetchResponse response = check hubspotClient->putFoldersFolderidMoveNewparentfolderid_move(folderId = testChildFolderId.toString(), newParentFolderId = "0");
     test:assertTrue(response.folder.parentFolderId == 0);
 }
 
@@ -301,24 +301,9 @@ function testMoveAListToAGivenFolder() returns error? {
         listId: testListId,
         newFolderId: testChildFolderId.toString()
     };
-    http:Response response = check hubspotClient->/folders/move\-list.put(payload);
+    http:Response response = check hubspotClient->putFoldersMoveList_movelist(payload);
     test:assertTrue(response.statusCode == 204);
 }
-
-// Retrieves a folder
-// 
-//  TODO: method call gives an error:
-//        client resource access action is not yet supported when the corresponding resource method is ambiguous
-// 
-// @test:Config{
-//     dependsOn: [testMoveAListToAGivenFolder]
-// }
-// function testRetrieveAFolder() returns error? {
-//     GetFolders_getallQueries queries = {
-//         folderId: testChildFolderId.toString()
-//     };
-//     ListFolderFetchResponse response = check hubspotClient->/folders(queries);
-// }
 
 // Rename a folder
 @test:Config {
@@ -328,26 +313,42 @@ function testRenameAFolder() returns error? {
     PutFoldersFolderidRename_renameQueries queries = {
         newFolderName: "test-child-folder-updated"
     };
-    ListFolderFetchResponse response = check hubspotClient->/folders/[testChildFolderId.toString()]/rename.put(queries = queries);
+    ListFolderFetchResponse response = check hubspotClient->putFoldersFolderidRename_rename(folderId = testChildFolderId.toString(), queries = queries);
     test:assertEquals(response.folder.name, "test-child-folder-updated");
 }
 
-// Deletes a folderDEL
+// Retrieves a folder
+// 
+//  TODO: method call gives an error:
+//        client resource access action is not yet supported when the corresponding resource method is ambiguous
+// 
+@test:Config{
+    dependsOn: [ testRenameAFolder]
+}
+function testRetrieveAFolder() returns error? {
+    GetFolders_getallQueries queries = {
+        folderId: testChildFolderId.toString()
+    };
+    ListFolderFetchResponse response = check hubspotClient->getFolders_getall(queries=queries);
+    test:assertTrue(response.folder.name == "test-child-folder-updated");
+}
+
+// Deletes a folder
 @test:Config {
     dependsOn: [testCreateFolders, testMoveAFolder, testMoveAListToAGivenFolder, testRenameAFolder]
 }
 function testDeleteFolders() returns error? {
-    http:Response response = check hubspotClient->/folders/[testChildFolderId.toString()].delete();
+    http:Response response = check hubspotClient->deleteFoldersFolderid_remove(folderId = testChildFolderId.toString());
     test:assertEquals(response.statusCode, 204);
-    http:Response responseParent = check hubspotClient->/folders/[testParentFolderId.toString()].delete();
+    http:Response responseParent = check hubspotClient->deleteFoldersFolderid_remove(folderId = testParentFolderId.toString());
     test:assertEquals(responseParent.statusCode, 204);
 };
 
 // Delete all lists created for tests
 @test:AfterSuite
 function deleteTestListAfterRestore() returns error? {
-    http:Response response = check hubspotClient->/[testListId].delete();
-    http:Response responseDynamic = check hubspotClient->/[testDynamicListId].delete();
+    http:Response response = check hubspotClient->deleteListid_remove(listId = testListId);
+    http:Response responseDynamic = check hubspotClient->deleteListid_remove(listId = testDynamicListId);
     test:assertTrue(response.statusCode == 204 && responseDynamic.statusCode == 204);
 }
 
