@@ -1,3 +1,19 @@
+// Copyright (c) 2025, WSO2 LLC. (http://www.wso2.com).
+//
+// WSO2 LLC. licenses this file to you under the Apache License,
+// Version 2.0 (the "License"); you may not use this file except
+// in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing,
+// software distributed under the License is distributed on an
+// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+// KIND, either express or implied.  See the License for the
+// specific language governing permissions and limitations
+// under the License.
+
 import ballerina/http;
 import ballerina/oauth2;
 import ballerina/test;
@@ -32,7 +48,7 @@ function testCreateAManualList() returns error? {
     ListCreateResponse response = check hubspotClient->post_create(payload);
     testListId = response.list.listId;
     testListName = response.list.name;
-    test:assertTrue(response.list.name == testListName);
+    test:assertEquals(response.list.name, testListName);
 }
 
 // Create a Dynamic List
@@ -69,7 +85,7 @@ function testCreateADynamicList() returns error? {
     };
     ListCreateResponse response = check hubspotClient->post_create(payload);
     testDynamicListId = response.list.listId;
-    test:assertTrue(response.list.name == "my-test-list-dynamic");
+    test:assertEquals(response.list.name, "my-test-list-dynamic");
 }
 
 // Fetch Multiple Lists
@@ -85,7 +101,7 @@ function testGetAllLists() returns error? {
 }
 function testGetListByName() returns error? {
     ListFetchResponse response = check hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(listName = testListName, objectTypeId = "0-1");
-    test:assertTrue(response.list.name == testListName);
+    test:assertEquals(response.list.name, testListName);
 }
 
 // Fetch List by ID
@@ -116,7 +132,7 @@ function testSearchLists() returns error? {
 }
 function testDeleteListById() returns error? {
     http:Response response = check hubspotClient->deleteListid_remove(listId = testListId);
-    test:assertTrue(response.statusCode == 204);
+    test:assertEquals(response.statusCode, 204);
 }
 
 // Restore a List
@@ -125,7 +141,7 @@ function testDeleteListById() returns error? {
 }
 function testRestoreListById() returns error? {
     http:Response response = check hubspotClient->putListidRestore_restore(listId = testListId);
-    test:assertTrue(response.statusCode == 204);
+    test:assertEquals(response.statusCode, 204);
 }
 
 // Update List Name
@@ -137,7 +153,7 @@ function testUpdateListName() returns error? {
         listName: "my-test-list-updated"
     };
     ListUpdateResponse response = check hubspotClient->putListidUpdateListName_updatename(listId = testListId, queries = queries);
-    test:assertTrue(response.updatedList?.name == "my-test-list-updated");
+    test:assertEquals(response.updatedList?.name, "my-test-list-updated");
 }
 
 // Update List Filter Definition
@@ -219,7 +235,7 @@ function testGetListsRecordIsMemberOf() returns error? {
 }
 function testAddAllRecordsFromSourceListToDestinationList() returns error? {
     http:Response response = check hubspotClient->putListidMembershipsAddFromSourcelistid_addallfromlist(listId = testListId, sourceListId = testDynamicListId);
-    test:assertTrue(response.statusCode == 204);
+    test:assertEquals(response.statusCode, 204);
 }
 
 // Add and/or Remove Records from a List
@@ -261,7 +277,7 @@ function testRemoveRecordsFromList() returns error? {
 }
 function testDeleteAllRecordsFromList() returns error? {
     http:Response response = check hubspotClient->deleteListidMemberships_removeall(listId = testListId);
-    test:assertTrue(response.statusCode == 204);
+    test:assertEquals(response.statusCode, 204);
 }
 
 // Creates a folder
@@ -271,7 +287,7 @@ function testCreateFolders() returns error? {
         name: "test-folder"
     };
     ListFolderCreateResponse response = check hubspotClient->postFolders_create(payload);
-    test:assertTrue(response.folder.name == "test-folder");
+    test:assertEquals(response.folder.name, "test-folder");
     testParentFolderId = response.folder.id;
 
     ListFolderCreateRequest childPayload = {
@@ -279,7 +295,7 @@ function testCreateFolders() returns error? {
         parentFolderId: testParentFolderId.toString()
     };
     ListFolderCreateResponse childResponse = check hubspotClient->postFolders_create(childPayload);
-    test:assertTrue(childResponse.folder.name == "test-child-folder");
+    test:assertEquals(childResponse.folder.name, "test-child-folder");
     testChildFolderId = childResponse.folder.id;
 }
 
@@ -289,7 +305,7 @@ function testCreateFolders() returns error? {
 }
 function testMoveAFolder() returns error? {
     ListFolderFetchResponse response = check hubspotClient->putFoldersFolderidMoveNewparentfolderid_move(folderId = testChildFolderId.toString(), newParentFolderId = "0");
-    test:assertTrue(response.folder.parentFolderId == 0);
+    test:assertEquals(response.folder.parentFolderId, 0);
 }
 
 // Moves a list to a given folder
@@ -302,7 +318,7 @@ function testMoveAListToAGivenFolder() returns error? {
         newFolderId: testChildFolderId.toString()
     };
     http:Response response = check hubspotClient->putFoldersMoveList_movelist(payload);
-    test:assertTrue(response.statusCode == 204);
+    test:assertEquals(response.statusCode, 204);
 }
 
 // Rename a folder
@@ -326,7 +342,7 @@ function testRetrieveAFolder() returns error? {
         folderId: testChildFolderId.toString()
     };
     ListFolderFetchResponse response = check hubspotClient->getFolders_getall(queries = queries);
-    test:assertTrue(response.folder.name == "test-child-folder-updated");
+    test:assertEquals(response.folder.name, "test-child-folder-updated");
 }
 
 // Deletes a folder
