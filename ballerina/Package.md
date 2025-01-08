@@ -78,7 +78,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
 2. Paste it in the browser and select your developer test account to intall the app when prompted. Provide consent for all scopes needed.
 
-   <img src=../docs/setup/resources/install_app.png alt="Selecting the App for OAuth process" style="width: 70%;">
+   ![Selecting the App for OAuth process](../docs/setup/resources/install_app.png)
 
 3. A code will be displayed in the browser. Copy the code.
 
