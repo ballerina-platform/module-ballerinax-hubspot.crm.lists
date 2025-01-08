@@ -2,7 +2,7 @@
 
 [HubSpot](https://www.hubspot.com/) is an AI-powered customer relationship management (CRM) platform. 
 
-The ballerinax/hubspot.crm.lists offers APIs to connect and interact with the [HubSpot CRM Lists API](https://developers.hubspot.com/docs/reference/api/crm/lists) endpoints, specifically based on the [HubSpot CRM Lists API v3 OpenAPI specification](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Lists/Rollouts/144891/v3/lists.json)
+The `ballerinax/hubspot.crm.lists` offers APIs to connect and interact with the [HubSpot CRM Lists API](https://developers.hubspot.com/docs/reference/api/crm/lists) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api/overview)
 
 ## Setup guide
 
