@@ -14,9 +14,9 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerina/http;
 import ballerina/io;
 import ballerina/oauth2;
-import ballerina/http;
 import ballerinax/hubspot.crm.lists as hubspotcrmLists;
 
 configurable string clientId = ?;
@@ -49,11 +49,11 @@ public function main() {
     io:println("[+] Folder created successfully: ", folder.name);
 
     // Generating lists for seperate priority levels
-    hubspotcrmLists:PublicEnumerationPropertyOperation filterOperation ={
-    includeObjectsWithNoValueSet: false,
-    values: ["HIGH"],
-    operationType: "ENUMERATION",
-    operator: "IS_ANY_OF"
+    hubspotcrmLists:PublicEnumerationPropertyOperation filterOperation = {
+        includeObjectsWithNoValueSet: false,
+        values: ["HIGH"],
+        operationType: "ENUMERATION",
+        operator: "IS_ANY_OF"
     };
     hubspotcrmLists:PublicPropertyFilter filterName = {
         property: "hs_ticket_priority",
@@ -79,20 +79,20 @@ public function main() {
         filterBranch: filterBranch
     };
     hubspotcrmLists:ListFetchResponse|error highPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
-    
+
     hubspotcrmLists:PublicObjectList highPriorityList;
     hubspotcrmLists:PublicObjectList mediumPriorityList;
     hubspotcrmLists:PublicObjectList lowPriorityList;
 
-    if highPriorityListCheckResponse is error{
-        hubspotcrmLists:ListCreateResponse|error highPriorityListResponse = hubspotClient->post_create(payload=payloadForLists);
+    if highPriorityListCheckResponse is error {
+        hubspotcrmLists:ListCreateResponse|error highPriorityListResponse = hubspotClient->post_create(payload = payloadForLists);
         if highPriorityListResponse is error {
             io:println("[!] Error occurred while creating the high priority list: ", highPriorityListResponse);
             return;
         }
         highPriorityList = highPriorityListResponse.list;
         io:println("[+] High priority list created successfully: ", highPriorityList.name);
-    }else{
+    } else {
         highPriorityList = highPriorityListCheckResponse.list;
         io:println("[+] High priority list already exists");
     }
@@ -101,15 +101,15 @@ public function main() {
     filterName.operation = {...filterOperation};
     payloadForLists.name = "Medium priority tickets";
     hubspotcrmLists:ListFetchResponse|error midPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
-    if midPriorityListCheckResponse is error{
-        hubspotcrmLists:ListCreateResponse|error mediumPriorityListResponse = hubspotClient->post_create(payload=payloadForLists);
+    if midPriorityListCheckResponse is error {
+        hubspotcrmLists:ListCreateResponse|error mediumPriorityListResponse = hubspotClient->post_create(payload = payloadForLists);
         if mediumPriorityListResponse is error {
             io:println("[!] Error occurred while creating the medium priority list: ", mediumPriorityListResponse);
             return;
         }
         mediumPriorityList = mediumPriorityListResponse.list;
         io:println("[+] Medium priority list created successfully: ", mediumPriorityList.name);
-    }else {
+    } else {
         mediumPriorityList = midPriorityListCheckResponse.list;
         io:println("[+] Medium priority list already exists");
     }
@@ -118,15 +118,15 @@ public function main() {
     filterName.operation = {...filterOperation};
     payloadForLists.name = "Low priority tickets";
     hubspotcrmLists:ListFetchResponse|error lowPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
-    if lowPriorityListCheckResponse is error{
-        hubspotcrmLists:ListCreateResponse|error lowPriorityListResponse = hubspotClient->post_create(payload=payloadForLists);
+    if lowPriorityListCheckResponse is error {
+        hubspotcrmLists:ListCreateResponse|error lowPriorityListResponse = hubspotClient->post_create(payload = payloadForLists);
         if lowPriorityListResponse is error {
             io:println("[!] Error occurred while creating the low priority list: ", lowPriorityListResponse);
             return;
         }
         lowPriorityList = lowPriorityListResponse.list;
         io:println("[+] Low priority list created successfully: ", lowPriorityList.name);
-    }else {
+    } else {
         lowPriorityList = lowPriorityListCheckResponse.list;
         io:println("[+] Low priority list already exists");
     }
@@ -170,7 +170,7 @@ public function main() {
     foreach var member in mediumPriorityListMembers {
         io:println("    - ", member.recordId);
     }
-    
+
     hubspotcrmLists:ApiCollectionResponseJoinTimeAndRecordId|error lowPriorityListMembersResponse = hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(lowPriorityList.listId);
     if lowPriorityListMembersResponse is error {
         io:println("[!] Error occurred while retrieving the low priority list members: ", lowPriorityListMembersResponse);
