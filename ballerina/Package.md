@@ -22,21 +22,21 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 1. Go to Test Account section from the left sidebar.
 
-   <img src=../docs/setup/resources/test_acc_1.png alt="Hubspot developer portal" style="width: 70%;">
+   ![Hubspot developer portal](../docs/setup/resources/test_acc_1.png)
 
 2. Click Create developer test account.
 
-   <img src=../docs/setup/resources/test_acc_2.png alt="Creating a hubspot test account" style="width: 70%;">
+   ![Creating a hubspot test account](../docs/setup/resources/test_acc_2.png)
 
 3. In the dialogue box, give a name to your test account and click create.
 
-   <img src=../docs/setup/resources/test_acc_3.png alt="Adding a name and description for the test account" style="width: 70%;">
+   ![Adding a name and description for the test account](../docs/setup/resources/test_acc_3.png)
 
 ### Step 3: Create a HubSpot App under your account.
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
 
-   <img src=../docs/setup/resources/create_app_1.png alt="Creating a new App" style="width: 70%;">
+   ![Creating a new App](../docs/setup/resources/create_app_1.png)
 
 2. Provide the necessary details, including the app name and description.
 
@@ -44,29 +44,25 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 1. Move to the Auth Tab.
 
-   <img src=../docs/setup/resources/create_app_2.png alt="Selecting the Auth tab" style="width: 70%;">
+   ![Selecting the Auth tab](../docs/setup/resources/create_app_2.png)
 
 2. In the Scopes section, add the following scopes for your app using the "Add new scope" button.
 
-   `crm.lists.read`
+   * `crm.lists.read`
+   * `crm.lists.write`
+   * `cms.membership.access_groups.write`
 
-   `crm.lists.write`
+   ![List of scopes](../docs/setup/resources/scope_set.png)
 
-   `cms.membership.access_groups.write`
+3. Add your Redirect URI in the relevant section. You can also use `localhost` addresses for local development purposes. Click "Create App".
 
-   <img src=../docs/setup/resources/scope_set.png alt="List of scopes" style="width: 70%;">
-
-   Scopes listed above are the mandotory scopes needed to use the HubSpot CRM Lists API. However you may need to add additional scopes based on your usecase. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
-
-3. Add your Redirect URI in the relevant section. You can also use localhost addresses for local development purposes. Click Create App.
-
-   <img src=../docs/setup/resources/create_app_final.png alt="Adding the redirect URI and save" style="width: 70%;">
+   ![Adding the redirect URI and save](../docs/setup/resources/create_app_final.png)
 
 ### Step 5: Get your Client ID and Client Secret
 
 - Navigate to the Auth section of your app. Make sure to save the provided Client ID and Client Secret.
 
-   <img src=../docs/setup/resources/get_credentials.png alt="Client ID and secret of the App" style="width: 70%;">
+   ![Client ID and secret of the App](../docs/setup/resources/get_credentials.png)
 
 ### Step 6: Setup Authentication Flow
 
@@ -80,17 +76,11 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
    Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>` and `<YOUR_SCOPES>` with your specific value.
 
-    **_NOTE: If you are using a localhost redirect url, make sure to have a listner running at the relevant port before executing the next step. You can use [this gist](https://gist.github.com/lnash94/0af47bfcb7cc1e3d59e06364b3c86b59) and run it using `bal run`. Alternatively, you can use any other method to bind a listner to the port._**
-
 2. Paste it in the browser and select your developer test account to intall the app when prompted. Provide consent for all scopes needed.
 
    <img src=../docs/setup/resources/install_app.png alt="Selecting the App for OAuth process" style="width: 70%;">
 
 3. A code will be displayed in the browser. Copy the code.
-
-   ```
-   Received code: na1-129d-860c-xxxx-xxxx-xxxxxxxxxxxx
-   ```
 
 4. Run the following curl command. Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI`> and `<YOUR_CLIENT_SECRET>` with your specific value. Use the code you received in the above step 3 as the `<CODE>`.
 
@@ -162,9 +152,7 @@ import ballerina/oauth2;
         credentialBearer: oauth2:POST_BODY_BEARER
     };
 
-    final string serviceUrl = "https://api.hubapi.com";
-
-    final crmlists:Client crmListClient = check new Client(config = {auth}, serviceUrl = serviceUrl);
+    final crmlists:Client crmListClient = check new Client(config = {auth});
 
     ```
 
