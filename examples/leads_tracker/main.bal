@@ -56,15 +56,15 @@ function getLeadsIDsfromCLI(string typeOfLeads) returns string[] {
 
 function addRecordsToList(string listId, string[] payload, string typeOfLeads) returns error? {
     hubspotcrmLists:MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsAdd_add(listId, payload);
-    if(response.recordsIdsAdded !is ()) {
-        io:println("[+] Leads added to the "+ typeOfLeads +" Leads List: ", response.recordsIdsAdded);
+    if (response.recordsIdsAdded !is ()) {
+        io:println("[+] Leads added to the " + typeOfLeads + " Leads List: ", response.recordsIdsAdded);
     }
-    if(response.recordIdsMissing !is ()) {
-        io:println("[!] Leads not added to the "+ typeOfLeads +" Leads List: ", response.recordIdsMissing);
+    if (response.recordIdsMissing !is ()) {
+        io:println("[!] Leads not added to the " + typeOfLeads + " Leads List: ", response.recordIdsMissing);
     }
 }
 
-public function main() returns error?{
+public function main() returns error? {
     // This example uses manual processing type for the lists for demonstration purposes.
     // In a real-world scenario, you can use the processing type that suits your requirement.
 
@@ -97,7 +97,7 @@ public function main() returns error?{
     string[] recordIDsPayload = [];
     recordIDsPayload = getLeadsIDsfromCLI("New");
     check addRecordsToList(newLeadsListCreateResponse.list.listId, recordIDsPayload, "New");
-    
+
     recordIDsPayload = getLeadsIDsfromCLI("Open");
     check addRecordsToList(openLeadsListCreateResponse.list.listId, recordIDsPayload, "Open");
 
