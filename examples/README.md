@@ -2,13 +2,19 @@
 
 The `ballerinax/hubspot.crm.lists` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
+1. [Customer Support Ticket Manager](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/examples/customer_support_tickets_manager) - Integrates with HubSpot CRM Lists to create filtered lists of customer support tickets based on the priority level of the ticket.
 2. 
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. Generate HubSpot CRM Lists access token as described in the [Setup guide](../README.md#setup). Make sure to provide the necessary scopes for each example when generating the access token.
+2. For each example, create a `Config.toml` file in the root directory of the example and provide the access token. This file should look like the following:
+
+    ```
+    clientId="<CLIENT_ID>"
+    clientSecret="<CLIENT_SECRET>"
+    refreshToken="<REFRESH_TOKEN>"
+    ```
 
 ## Running an example
 
