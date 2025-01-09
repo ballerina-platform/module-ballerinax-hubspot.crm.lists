@@ -162,7 +162,7 @@ import ballerina/oauth2;
         credentialBearer: oauth2:POST_BODY_BEARER
     };
 
-    final crmlists:Client crmListClient = check new Client(config = {auth});
+    final crmlists:Client crmListClient = check new ({auth});
 
     ```
 
