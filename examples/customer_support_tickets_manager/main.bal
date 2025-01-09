@@ -16,7 +16,7 @@
 
 import ballerina/io;
 import ballerina/oauth2;
-import ballerinax/hubspot.crm.lists as hubspotcrmLists;
+import ballerinax/hubspot.crm.lists as hslists;
 
 configurable string clientId = ?;
 configurable string clientSecret = ?;
@@ -25,63 +25,63 @@ configurable string refreshToken = ?;
 // To run this example, you need to add 'tickets' scope to the HubSpot OAuth key
 // with other required scopes for the Ballerina HubSpot CRM Lists connector.
 
-hubspotcrmLists:OAuth2RefreshTokenGrantConfig auth = {
+hslists:OAuth2RefreshTokenGrantConfig auth = {
     clientId,
     clientSecret,
     refreshToken,
     credentialBearer: oauth2:POST_BODY_BEARER
 };
 
-final hubspotcrmLists:Client hubspotClient = check new hubspotcrmLists:Client(config = {auth});
+final hslists:Client hubspotClient = check new ({auth});
 
 public function main() returns error? {
     // creating a new folder for customer support tickets
-    hubspotcrmLists:ListFolderCreateRequest folderCreateReqPayload = {
+    hslists:ListFolderCreateRequest folderCreateReqPayload = {
         name: "Customer Support Tickets"
     };
-    hubspotcrmLists:ListFolderCreateResponse postFolderCreateResponse = check hubspotClient->postFolders_create(folderCreateReqPayload);
+    hslists:ListFolderCreateResponse postFolderCreateResponse = check hubspotClient->postFolders_create(folderCreateReqPayload);
 
-    hubspotcrmLists:PublicListFolder folder = postFolderCreateResponse.folder;
+    hslists:PublicListFolder folder = postFolderCreateResponse.folder;
     io:println("[+] Folder created successfully: ", folder.name);
 
     // Generating lists for seperate priority levels
-    hubspotcrmLists:PublicEnumerationPropertyOperation filterOperation = {
+    hslists:PublicEnumerationPropertyOperation filterOperation = {
         includeObjectsWithNoValueSet: false,
         values: ["HIGH"],
         operationType: "ENUMERATION",
         operator: "IS_ANY_OF"
     };
-    hubspotcrmLists:PublicPropertyFilter filterName = {
+    hslists:PublicPropertyFilter filterName = {
         property: "hs_ticket_priority",
         filterType: "PROPERTY",
         operation: {...filterOperation}
     };
-    hubspotcrmLists:PublicAndFilterBranch nestedFilterBranch = {
+    hslists:PublicAndFilterBranch nestedFilterBranch = {
         filterBranchType: "AND",
         filterBranches: [],
         filterBranchOperator: "AND",
         filters: [filterName]
     };
-    hubspotcrmLists:PublicOrFilterBranch filterBranch = {
+    hslists:PublicOrFilterBranch filterBranch = {
         filterBranchType: "OR",
         filterBranches: [nestedFilterBranch],
         filterBranchOperator: "OR",
         filters: []
     };
-    hubspotcrmLists:ListCreateRequest payloadForLists = {
+    hslists:ListCreateRequest payloadForLists = {
         objectTypeId: "0-5",
         processingType: "DYNAMIC",
         name: "High priority tickets",
         filterBranch: filterBranch
     };
-    hubspotcrmLists:ListFetchResponse|error highPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
+    hslists:ListFetchResponse|error highPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname("0-5", "High priority tickets");
 
-    hubspotcrmLists:PublicObjectList highPriorityList;
-    hubspotcrmLists:PublicObjectList mediumPriorityList;
-    hubspotcrmLists:PublicObjectList lowPriorityList;
+    hslists:PublicObjectList highPriorityList;
+    hslists:PublicObjectList mediumPriorityList;
+    hslists:PublicObjectList lowPriorityList;
 
     if highPriorityListCheckResponse is error {
-        hubspotcrmLists:ListCreateResponse highPriorityListResponse = check hubspotClient->post_create(payload = payloadForLists);
+        hslists:ListCreateResponse highPriorityListResponse = check hubspotClient->post_create(payloadForLists);
         highPriorityList = highPriorityListResponse.list;
         io:println("[+] High priority list created successfully: ", highPriorityList.name);
     } else {
@@ -92,9 +92,9 @@ public function main() returns error? {
     filterOperation.values = ["MEDIUM"];
     filterName.operation = {...filterOperation};
     payloadForLists.name = "Medium priority tickets";
-    hubspotcrmLists:ListFetchResponse|error midPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
+    hslists:ListFetchResponse|error midPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname("0-5", "High priority tickets");
     if midPriorityListCheckResponse is error {
-        hubspotcrmLists:ListCreateResponse mediumPriorityListResponse = check hubspotClient->post_create(payload = payloadForLists);
+        hslists:ListCreateResponse mediumPriorityListResponse = check hubspotClient->post_create(payloadForLists);
         mediumPriorityList = mediumPriorityListResponse.list;
         io:println("[+] Medium priority list created successfully: ", mediumPriorityList.name);
     } else {
@@ -105,9 +105,9 @@ public function main() returns error? {
     filterOperation.values = ["LOW"];
     filterName.operation = {...filterOperation};
     payloadForLists.name = "Low priority tickets";
-    hubspotcrmLists:ListFetchResponse|error lowPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(objectTypeId = "0-5", listName = "High priority tickets");
+    hslists:ListFetchResponse|error lowPriorityListCheckResponse = hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname("0-5", "High priority tickets");
     if lowPriorityListCheckResponse is error {
-        hubspotcrmLists:ListCreateResponse lowPriorityListResponse = check hubspotClient->post_create(payload = payloadForLists);
+        hslists:ListCreateResponse lowPriorityListResponse = check hubspotClient->post_create(payloadForLists);
         lowPriorityList = lowPriorityListResponse.list;
         io:println("[+] Low priority list created successfully: ", lowPriorityList.name);
     } else {
@@ -116,27 +116,27 @@ public function main() returns error? {
     }
 
     // Move the created lists to the folder
-    _ = check hubspotClient->putFoldersMoveList_movelist(payload = {listId: highPriorityList.listId, newFolderId: folder.id.toString()});
-    _ = check hubspotClient->putFoldersMoveList_movelist(payload = {listId: mediumPriorityList.listId, newFolderId: folder.id.toString()});
-    _ = check hubspotClient->putFoldersMoveList_movelist(payload = {listId: lowPriorityList.listId, newFolderId: folder.id.toString()});
+    _ = check hubspotClient->putFoldersMoveList_movelist({listId: highPriorityList.listId, newFolderId: folder.id.toString()});
+    _ = check hubspotClient->putFoldersMoveList_movelist({listId: mediumPriorityList.listId, newFolderId: folder.id.toString()});
+    _ = check hubspotClient->putFoldersMoveList_movelist({listId: lowPriorityList.listId, newFolderId: folder.id.toString()});
 
     // Retrieve each list and print the details
-    hubspotcrmLists:ApiCollectionResponseJoinTimeAndRecordId highPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(highPriorityList.listId);
-    hubspotcrmLists:JoinTimeAndRecordId[] highPriorityListMembers = highPriorityListMembersResponse.results;
+    hslists:ApiCollectionResponseJoinTimeAndRecordId highPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(highPriorityList.listId);
+    hslists:JoinTimeAndRecordId[] highPriorityListMembers = highPriorityListMembersResponse.results;
     io:println("[+] High priority list members: ");
     foreach var member in highPriorityListMembers {
         io:println("    - ", member.recordId);
     }
 
-    hubspotcrmLists:ApiCollectionResponseJoinTimeAndRecordId mediumPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(mediumPriorityList.listId);
-    hubspotcrmLists:JoinTimeAndRecordId[] mediumPriorityListMembers = mediumPriorityListMembersResponse.results;
+    hslists:ApiCollectionResponseJoinTimeAndRecordId mediumPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(mediumPriorityList.listId);
+    hslists:JoinTimeAndRecordId[] mediumPriorityListMembers = mediumPriorityListMembersResponse.results;
     io:println("[+] Medium priority list members: ");
     foreach var member in mediumPriorityListMembers {
         io:println("    - ", member.recordId);
     }
 
-    hubspotcrmLists:ApiCollectionResponseJoinTimeAndRecordId lowPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(lowPriorityList.listId);
-    hubspotcrmLists:JoinTimeAndRecordId[] lowPriorityListMembers = lowPriorityListMembersResponse.results;
+    hslists:ApiCollectionResponseJoinTimeAndRecordId lowPriorityListMembersResponse = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(lowPriorityList.listId);
+    hslists:JoinTimeAndRecordId[] lowPriorityListMembers = lowPriorityListMembersResponse.results;
     io:println("[+] Low priority list members: ");
     foreach var member in lowPriorityListMembers {
         io:println("    - ", member.recordId);
