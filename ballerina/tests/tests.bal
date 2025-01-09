@@ -120,10 +120,8 @@ function testSearchLists() returns error? {
         query: "test"
     };
     ListSearchResponse response = check hubspotClient->postSearch_dosearch(payload);
-    test:assertTrue(response.lists.length() >= 0);
-    if (response.lists.length() > 0) {
-        test:assertTrue(response.lists[0].name.includes("test"));
-    }
+    test:assertTrue(response.lists.length() > 0);
+    test:assertTrue(response.lists[0].name.includes("test"));
 }
 
 // Delete a List
