@@ -18,18 +18,12 @@ import ballerina/http;
 import ballerina/oauth2;
 import ballerina/test;
 
+configurable boolean isLiveServer = ?; // Set this to true to run live tests with hubspot API
 configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
 
-OAuth2RefreshTokenGrantConfig auth = {
-    clientId,
-    clientSecret,
-    refreshToken,
-    credentialBearer: oauth2:POST_BODY_BEARER
-};
-
-final Client hubspotClient = check new Client(config = {auth});
+Client hubspotClient = test:mock(Client);
 
 string testListId = "";
 string testDynamicListId = "";
@@ -37,8 +31,25 @@ string testListName = "my-test-list";
 int:Signed32 testParentFolderId = 0;
 int:Signed32 testChildFolderId = 0;
 
+@test:BeforeSuite
+function setup() returns error? {
+    OAuth2RefreshTokenGrantConfig auth = {
+        clientId,
+        clientSecret,
+        refreshToken,
+        credentialBearer: oauth2:POST_BODY_BEARER
+    };
+    if (isLiveServer) {
+        hubspotClient = check new Client(config = {auth});
+    } else {
+        hubspotClient = check new Client(config = {auth}, serviceUrl = "http://localhost:9090");
+    }
+}
+
 // Create List
-@test:Config {}
+@test:Config {
+    groups: ["live_tests", "mock_tests"]
+}
 function testCreateAManualList() returns error? {
     ListCreateRequest payload = {
         objectTypeId: "0-1",
@@ -52,7 +63,9 @@ function testCreateAManualList() returns error? {
 }
 
 // Create a Dynamic List
-@test:Config {}
+@test:Config {
+    groups: ["live_tests", "mock_tests"]
+}
 function testCreateADynamicList() returns error? {
     PublicMultiStringPropertyOperation operation = {
         includeObjectsWithNoValueSet: false,
@@ -89,7 +102,9 @@ function testCreateADynamicList() returns error? {
 }
 
 // Fetch Multiple Lists
-@test:Config {}
+@test:Config {
+    groups: ["live_tests", "mock_tests"]
+}
 function testGetAllLists() returns error? {
     ListsByIdResponse response = check hubspotClient->get_getall();
     test:assertTrue(response.lists.length() >= 0);
@@ -97,7 +112,8 @@ function testGetAllLists() returns error? {
 
 // Fetch List by Name
 @test:Config {
-    dependsOn: [testCreateAManualList]
+    dependsOn: [testCreateAManualList],
+    groups: ["live_tests", "mock_tests"]
 }
 function testGetListByName() returns error? {
     ListFetchResponse response = check hubspotClient->getObjectTypeIdObjecttypeidNameListname_getbyname(listName = testListName, objectTypeId = "0-1");
@@ -106,7 +122,8 @@ function testGetListByName() returns error? {
 
 // Fetch List by ID
 @test:Config {
-    dependsOn: [testCreateAManualList]
+    dependsOn: [testCreateAManualList],
+    groups: ["live_tests", "mock_tests"]
 }
 function testGetListById() returns error? {
     ListFetchResponse response = check hubspotClient->getListid_getbyid(listId = testListId);
@@ -114,7 +131,9 @@ function testGetListById() returns error? {
 }
 
 // Search Lists
-@test:Config {}
+@test:Config {
+    groups: ["live_tests", "mock_tests"]
+}
 function testSearchLists() returns error? {
     ListSearchRequest payload = {
         query: "test"
@@ -126,7 +145,8 @@ function testSearchLists() returns error? {
 
 // Delete a List
 @test:Config {
-    dependsOn: [testCreateAManualList, testGetListById, testGetListByName]
+    dependsOn: [testCreateAManualList, testGetListById, testGetListByName],
+    groups: ["live_tests", "mock_tests"]
 }
 function testDeleteListById() returns error? {
     http:Response response = check hubspotClient->deleteListid_remove(listId = testListId);
@@ -135,7 +155,8 @@ function testDeleteListById() returns error? {
 
 // Restore a List
 @test:Config {
-    dependsOn: [testCreateAManualList, testDeleteListById]
+    dependsOn: [testCreateAManualList, testDeleteListById],
+    groups: ["live_tests", "mock_tests"]
 }
 function testRestoreListById() returns error? {
     http:Response response = check hubspotClient->putListidRestore_restore(listId = testListId);
@@ -144,7 +165,8 @@ function testRestoreListById() returns error? {
 
 // Update List Name
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests", "mock_tests"]
 }
 function testUpdateListName() returns error? {
     PutListidUpdateListName_updatenameQueries queries = {
@@ -156,7 +178,8 @@ function testUpdateListName() returns error? {
 
 // Update List Filter Definition
 @test:Config {
-    dependsOn: [testCreateADynamicList]
+    dependsOn: [testCreateADynamicList],
+    groups: ["live_tests"]
 }
 function testUpdateListFilter() returns error? {
     PublicMultiStringPropertyOperation operationFirstname = {
@@ -203,7 +226,8 @@ function testUpdateListFilter() returns error? {
 
 // Fetch List Memberships Ordered by Added to List Date
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
     ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(listId = testListId);
@@ -212,7 +236,8 @@ function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
 
 // Fetch List Memberships Ordered by ID
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testFetchListMembershipsOrderedById() returns error? {
     ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMemberships_getpage(listId = testListId);
@@ -220,7 +245,9 @@ function testFetchListMembershipsOrderedById() returns error? {
 };
 
 // Get lists record is member of
-@test:Config {}
+@test:Config {
+    groups: ["live_tests"]
+}
 function testGetListsRecordIsMemberOf() returns error? {
     ApiCollectionResponseRecordListMembershipNoPaging response = check hubspotClient->getRecordsObjecttypeidRecordidMemberships_getlists(objectTypeId = "0-1", recordId = "123456");
     int total = response.total ?: 0;
@@ -229,7 +256,8 @@ function testGetListsRecordIsMemberOf() returns error? {
 
 // Add All Records from a Source List to a Destination List
 @test:Config {
-    dependsOn: [testRestoreListById, testCreateADynamicList]
+    dependsOn: [testRestoreListById, testCreateADynamicList],
+    groups: ["live_tests"]
 }
 function testAddAllRecordsFromSourceListToDestinationList() returns error? {
     http:Response response = check hubspotClient->putListidMembershipsAddFromSourcelistid_addallfromlist(listId = testListId, sourceListId = testDynamicListId);
@@ -238,7 +266,8 @@ function testAddAllRecordsFromSourceListToDestinationList() returns error? {
 
 // Add and/or Remove Records from a List
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testAddRemoveRecordsFromAList() returns error? {
     MembershipChangeRequest payload = {
@@ -251,7 +280,8 @@ function testAddRemoveRecordsFromAList() returns error? {
 
 // Add Records to a List
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testAddRecordsToAList() returns error? {
     string[] payload = ["123123", "123456"];
@@ -261,7 +291,8 @@ function testAddRecordsToAList() returns error? {
 
 // Remove Records from a List
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testRemoveRecordsFromList() returns error? {
     string[] payload = ["123123"];
@@ -271,7 +302,8 @@ function testRemoveRecordsFromList() returns error? {
 
 // Delete All Records from a List
 @test:Config {
-    dependsOn: [testRestoreListById]
+    dependsOn: [testRestoreListById],
+    groups: ["live_tests"]
 }
 function testDeleteAllRecordsFromList() returns error? {
     http:Response response = check hubspotClient->deleteListidMemberships_removeall(listId = testListId);
@@ -279,7 +311,9 @@ function testDeleteAllRecordsFromList() returns error? {
 }
 
 // Creates a folder
-@test:Config {}
+@test:Config {
+    groups: ["live_tests"]
+}
 function testCreateFolders() returns error? {
     ListFolderCreateRequest payload = {
         name: "test-folder"
@@ -299,7 +333,8 @@ function testCreateFolders() returns error? {
 
 // Moves a folder
 @test:Config {
-    dependsOn: [testCreateFolders]
+    dependsOn: [testCreateFolders],
+    groups: ["live_tests"]
 }
 function testMoveAFolder() returns error? {
     ListFolderFetchResponse response = check hubspotClient->putFoldersFolderidMoveNewparentfolderid_move(folderId = testChildFolderId.toString(), newParentFolderId = "0");
@@ -308,7 +343,8 @@ function testMoveAFolder() returns error? {
 
 // Moves a list to a given folder
 @test:Config {
-    dependsOn: [testCreateAManualList, testMoveAFolder]
+    dependsOn: [testCreateAManualList, testMoveAFolder],
+    groups: ["live_tests"]
 }
 function testMoveAListToAGivenFolder() returns error? {
     ListMoveRequest payload = {
@@ -321,7 +357,8 @@ function testMoveAListToAGivenFolder() returns error? {
 
 // Rename a folder
 @test:Config {
-    dependsOn: [testCreateFolders]
+    dependsOn: [testCreateFolders],
+    groups: ["live_tests"]
 }
 function testRenameAFolder() returns error? {
     PutFoldersFolderidRename_renameQueries queries = {
@@ -333,7 +370,8 @@ function testRenameAFolder() returns error? {
 
 // Retrieves a folder
 @test:Config {
-    dependsOn: [testRenameAFolder]
+    dependsOn: [testRenameAFolder],
+    groups: ["live_tests"]
 }
 function testRetrieveAFolder() returns error? {
     GetFolders_getallQueries queries = {
@@ -345,7 +383,8 @@ function testRetrieveAFolder() returns error? {
 
 // Deletes a folder
 @test:Config {
-    dependsOn: [testCreateFolders, testMoveAFolder, testMoveAListToAGivenFolder, testRenameAFolder]
+    dependsOn: [testCreateFolders, testMoveAFolder, testMoveAListToAGivenFolder, testRenameAFolder],
+    groups: ["live_tests"]
 }
 function testDeleteFolders() returns error? {
     http:Response response = check hubspotClient->deleteFoldersFolderid_remove(folderId = testChildFolderId.toString());
