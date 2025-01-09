@@ -18,7 +18,7 @@ import ballerina/http;
 import ballerina/oauth2;
 import ballerina/test;
 
-configurable boolean isLiveServer = ?; // Set this to true to run live tests with hubspot API
+configurable boolean isLiveServer = false; // Set this to true to run live tests with hubspot API
 configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
