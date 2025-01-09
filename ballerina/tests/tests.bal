@@ -39,7 +39,7 @@ function setup() returns error? {
         refreshToken,
         credentialBearer: oauth2:POST_BODY_BEARER
     };
-    if (isLiveServer) {
+    if isLiveServer {
         hubspotClient = check new Client(config = {auth});
     } else {
         hubspotClient = check new Client(config = {auth}, serviceUrl = "http://localhost:9090");

@@ -46,7 +46,7 @@ function getLeadsIDsfromCLI(string typeOfLeads) returns string[] {
     while (true) {
         io:print("[*] Enter a lead ID (or Press Enter to finish): ");
         leadID = io:readln();
-        if (leadID == "") {
+        if leadID == "" {
             break;
         }
         leadsIDs.push(leadID);
@@ -56,10 +56,10 @@ function getLeadsIDsfromCLI(string typeOfLeads) returns string[] {
 
 function addRecordsToList(string listId, string[] payload, string typeOfLeads) returns error? {
     hubspotcrmLists:MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsAdd_add(listId, payload);
-    if (response.recordsIdsAdded !is ()) {
+    if response.recordsIdsAdded !is () {
         io:println("[+] Leads added to the " + typeOfLeads + " Leads List: ", response.recordsIdsAdded);
     }
-    if (response.recordIdsMissing !is ()) {
+    if response.recordIdsMissing !is () {
         io:println("[!] Leads not added to the " + typeOfLeads + " Leads List: ", response.recordIdsMissing);
     }
 }
