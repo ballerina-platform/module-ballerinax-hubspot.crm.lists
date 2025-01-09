@@ -134,7 +134,7 @@ To use the `HubSpot CRM Lists` connector in your Ballerina application, update t
 Import the `hubspot.crm.lists` module and `oauth2` module.
 
 ```ballerina
-import ballerinax/hubspot.crm.lists as crmlists;
+import ballerinax/hubspot.crm.lists as hslists;
 import ballerina/oauth2;
 ```
 
@@ -162,7 +162,7 @@ import ballerina/oauth2;
         credentialBearer: oauth2:POST_BODY_BEARER
     };
 
-    final crmlists:Client crmListClient = check new ({auth});
+    final hslists:Client crmListClient = check new ({auth});
 
     ```
 
@@ -174,12 +174,12 @@ Now, utilize the available connector operations. A sample usecase is shown below
     
 ```ballerina
 public function main() returns error? {
-    crmlists:ListCreateRequest payload = {
+    hslists:ListCreateRequest payload = {
         objectTypeId: "0-1",
         processingType: "MANUAL",
         name: "my-test-list"
     };
-    crmlists:ListCreateResponse response = check crmListClient->/crm/v3/lists.post(payload);
+    hslists:ListCreateResponse response = check crmListClient->/crm/v3/lists.post(payload);
 }
 ```
 
