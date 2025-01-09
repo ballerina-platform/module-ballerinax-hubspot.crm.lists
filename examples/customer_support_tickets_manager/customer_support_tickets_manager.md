@@ -25,4 +25,3 @@ Execute the following commands to run the example:
 ```bash
 bal run
 ```
-
