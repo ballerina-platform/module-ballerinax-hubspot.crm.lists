@@ -22,21 +22,22 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 1. Go to Test Account section from the left sidebar.
 
-   ![Hubspot developer portal](../docs/setup/resources/test_acc_1.png)
+
+   ![Hubspot developer portal](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_1.png)
 
 2. Click Create developer test account.
 
-   ![Creating a hubspot test account](../docs/setup/resources/test_acc_2.png)
+   ![Creating a hubspot test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_2.png)
 
 3. In the dialogue box, give a name to your test account and click create.
 
-   ![Adding a name and description for the test account](../docs/setup/resources/test_acc_3.png)
+   ![Adding a name and description for the test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_3.png)
 
 ### Step 3: Create a HubSpot App under your account.
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
 
-   ![Creating a new App](../docs/setup/resources/create_app_1.png)
+   ![Creating a new App](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/create_app_1.png)
 
 2. Provide the necessary details, including the app name and description.
 
@@ -44,7 +45,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 1. Move to the Auth Tab.
 
-   ![Selecting the Auth tab](../docs/setup/resources/create_app_2.png)
+   ![Selecting the Auth tab](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/create_app_2.png)
 
 2. In the Scopes section, add the following scopes for your app using the "Add new scope" button.
 
@@ -52,19 +53,19 @@ Within app developer accounts, you can create a [developer test account](https:/
    * `crm.lists.write`
    * `cms.membership.access_groups.write`
 
-   ![List of scopes](../docs/setup/resources/scope_set.png)
+   ![List of scopes](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/scope_set.png)
 
    Scopes listed above are the mandotory scopes needed to use the HubSpot CRM Lists API. However you may need to add additional scopes based on your usecase. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
 
 3. Add your Redirect URI in the relevant section. You can also use `localhost` addresses for local development purposes. Click "Create App".
 
-   ![Adding the redirect URI and save](../docs/setup/resources/create_app_final.png)
+   ![Adding the redirect URI and save](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/create_app_final.png)
 
 ### Step 5: Get your Client ID and Client Secret
 
 - Navigate to the Auth section of your app. Make sure to save the provided Client ID and Client Secret.
 
-   ![Client ID and secret of the App](../docs/setup/resources/get_credentials.png)
+   ![Client ID and secret of the App](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/get_credentials.png)
 
 ### Step 6: Setup Authentication Flow
 
@@ -80,7 +81,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
 2. Paste it in the browser and select your developer test account to intall the app when prompted. Provide consent for all scopes needed.
 
-   ![Selecting the App for OAuth process](../docs/setup/resources/install_app.png)
+   ![Selecting the App for OAuth process](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/install_app.png)
 
 3. A code will be displayed in the browser. Copy the code.
 
