@@ -1,6 +1,6 @@
 ## Leads Tracker
 
-This usecase demonstrates how the Ballerina HubSpot CRM Lists connector can be used to create manual lists and add records to them. Example code takes the contact(lead) ID as a CLI input, but in a real-world scenario, you can get these IDs from a database or any other source.
+This usecase demonstrates how the Ballerina HubSpot CRM Lists connector can be used to create manual lists and add records to them. Example code uses a function that returns a list of dummy IDs, but in a real-world scenario, you can get these IDs from a database or any other source.
 
 ## Prerequisites
 
