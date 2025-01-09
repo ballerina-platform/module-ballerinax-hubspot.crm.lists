@@ -54,6 +54,8 @@ Within app developer accounts, you can create a [developer test account](https:/
 
    ![List of scopes](../docs/setup/resources/scope_set.png)
 
+   Scopes listed above are the mandotory scopes needed to use the HubSpot CRM Lists API. However you may need to add additional scopes based on your usecase. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
+
 3. Add your Redirect URI in the relevant section. You can also use `localhost` addresses for local development purposes. Click "Create App".
 
    ![Adding the redirect URI and save](../docs/setup/resources/create_app_final.png)
