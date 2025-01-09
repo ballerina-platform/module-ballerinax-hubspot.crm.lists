@@ -79,7 +79,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
    Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>` and `<YOUR_SCOPES>` with your specific value.
 
-2. Paste it in the browser and select your developer test account to intall the app when prompted. Provide consent for all scopes needed.
+2. Paste it in the browser and select your developer test account to install the app when prompted. Provide consent for all scopes needed.
 
    ![Selecting the App for OAuth process](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/install_app.png)
 
