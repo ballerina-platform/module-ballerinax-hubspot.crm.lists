@@ -179,7 +179,8 @@ function testUpdateListName() returns error? {
 // Update List Filter Definition
 @test:Config {
     dependsOn: [testCreateADynamicList],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testUpdateListFilter() returns error? {
     PublicMultiStringPropertyOperation operationFirstname = {
@@ -227,7 +228,8 @@ function testUpdateListFilter() returns error? {
 // Fetch List Memberships Ordered by Added to List Date
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
     ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate(listId = testListId);
@@ -237,7 +239,8 @@ function testFetchListMembershipsOrderedByAddedToListDate() returns error? {
 // Fetch List Memberships Ordered by ID
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testFetchListMembershipsOrderedById() returns error? {
     ApiCollectionResponseJoinTimeAndRecordId response = check hubspotClient->getListidMemberships_getpage(listId = testListId);
@@ -246,7 +249,8 @@ function testFetchListMembershipsOrderedById() returns error? {
 
 // Get lists record is member of
 @test:Config {
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testGetListsRecordIsMemberOf() returns error? {
     ApiCollectionResponseRecordListMembershipNoPaging response = check hubspotClient->getRecordsObjecttypeidRecordidMemberships_getlists(objectTypeId = "0-1", recordId = "123456");
@@ -257,7 +261,8 @@ function testGetListsRecordIsMemberOf() returns error? {
 // Add All Records from a Source List to a Destination List
 @test:Config {
     dependsOn: [testRestoreListById, testCreateADynamicList],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testAddAllRecordsFromSourceListToDestinationList() returns error? {
     http:Response response = check hubspotClient->putListidMembershipsAddFromSourcelistid_addallfromlist(listId = testListId, sourceListId = testDynamicListId);
@@ -267,7 +272,8 @@ function testAddAllRecordsFromSourceListToDestinationList() returns error? {
 // Add and/or Remove Records from a List
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testAddRemoveRecordsFromAList() returns error? {
     MembershipChangeRequest payload = {
@@ -281,7 +287,8 @@ function testAddRemoveRecordsFromAList() returns error? {
 // Add Records to a List
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testAddRecordsToAList() returns error? {
     string[] payload = ["123123", "123456"];
@@ -292,7 +299,8 @@ function testAddRecordsToAList() returns error? {
 // Remove Records from a List
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testRemoveRecordsFromList() returns error? {
     string[] payload = ["123123"];
@@ -303,7 +311,8 @@ function testRemoveRecordsFromList() returns error? {
 // Delete All Records from a List
 @test:Config {
     dependsOn: [testRestoreListById],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testDeleteAllRecordsFromList() returns error? {
     http:Response response = check hubspotClient->deleteListidMemberships_removeall(listId = testListId);
@@ -312,7 +321,8 @@ function testDeleteAllRecordsFromList() returns error? {
 
 // Creates a folder
 @test:Config {
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testCreateFolders() returns error? {
     ListFolderCreateRequest payload = {
@@ -334,7 +344,8 @@ function testCreateFolders() returns error? {
 // Moves a folder
 @test:Config {
     dependsOn: [testCreateFolders],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testMoveAFolder() returns error? {
     ListFolderFetchResponse response = check hubspotClient->putFoldersFolderidMoveNewparentfolderid_move(folderId = testChildFolderId.toString(), newParentFolderId = "0");
@@ -344,7 +355,8 @@ function testMoveAFolder() returns error? {
 // Moves a list to a given folder
 @test:Config {
     dependsOn: [testCreateAManualList, testMoveAFolder],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testMoveAListToAGivenFolder() returns error? {
     ListMoveRequest payload = {
@@ -358,7 +370,8 @@ function testMoveAListToAGivenFolder() returns error? {
 // Rename a folder
 @test:Config {
     dependsOn: [testCreateFolders],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testRenameAFolder() returns error? {
     PutFoldersFolderidRename_renameQueries queries = {
@@ -371,7 +384,8 @@ function testRenameAFolder() returns error? {
 // Retrieves a folder
 @test:Config {
     dependsOn: [testRenameAFolder],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testRetrieveAFolder() returns error? {
     GetFolders_getallQueries queries = {
@@ -384,7 +398,8 @@ function testRetrieveAFolder() returns error? {
 // Deletes a folder
 @test:Config {
     dependsOn: [testCreateFolders, testMoveAFolder, testMoveAListToAGivenFolder, testRenameAFolder],
-    groups: ["live_tests"]
+    groups: ["live_tests"],
+    enable: isLiveServer
 }
 function testDeleteFolders() returns error? {
     http:Response response = check hubspotClient->deleteFoldersFolderid_remove(folderId = testChildFolderId.toString());
