@@ -12,15 +12,15 @@ To use the HubSpot CRM Lists connector, you must have access to the HubSpot API 
 
 If you have an account already, go to the [HubSpot developer portal](https://app.hubspot.com/)
 
-If you don't have a HubSpot Developer Account you can sign up to a free account [here](https://developers.hubspot.com/get-started)
+If you don't have a HubSpot Developer Account you can sign up for a free account [here](https://developers.hubspot.com/get-started)
 
 ### Step 2 (Optional): Create a Developer Test Account
 
 Within app developer accounts, you can create a [developer test account](https://developers.hubspot.com/beta-docs/getting-started/account-types#developer-test-accounts) under your account to test apps and integrations without affecting any real HubSpot data.
 
-> **Note:** These accounts are only for development and testing purposes. In production you should not use Developer Test Accounts.
+> **Note:** These accounts are only for development and testing purposes. In production, you should not use Developer Test Accounts.
 
-1. Go to Test Account section from the left sidebar.
+1. Go to the Test Account section from the left sidebar.
 
    ![Hubspot developer portal](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_1.png)
 
@@ -28,7 +28,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
    ![Creating a hubspot test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_2.png)
 
-3. In the dialogue box, give a name to your test account and click create.
+3. In the dialogue box, give a name to your test account and click "Create".
 
    ![Adding a name and description for the test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_3.png)
 
@@ -54,7 +54,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
    ![List of scopes](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/scope_set.png)
 
-   Scopes listed above are the mandotory scopes needed to use the HubSpot CRM Lists API. However you may need to add additional scopes based on your usecase. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
+   The scopes listed above are the mandatory scopes needed to use the HubSpot CRM Lists API. However, you may need to add additional scopes based on your use case. For example, if you are working with contacts, you may need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scopes as well.
 
 3. Add your Redirect URI in the relevant section. You can also use `localhost` addresses for local development purposes. Click "Create App".
 
@@ -140,7 +140,7 @@ import ballerina/oauth2;
     refreshToken = <Refresh Token>
    ```
 
-2. Instantiate a `OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
+2. Instantiate an `OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
 
     ```ballerina 
     configurable string clientId = ?;
@@ -160,7 +160,7 @@ import ballerina/oauth2;
 
 ### Step 3: Invoke the connector operation
 
-Now, utilize the available connector operations. A sample usecase is shown below.
+Now, utilize the available connector operations. A sample use case is shown below.
 
 #### Create a CRM List
     

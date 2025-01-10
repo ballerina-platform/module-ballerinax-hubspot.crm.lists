@@ -6,7 +6,7 @@ This usecase demonstrates how the Ballerina HubSpot CRM Lists connector can be u
 
 ### 1. Setup HubSpot Developer Account
 
-Refer to the [Setup guide](../../README.md#setup) to create a HubSpot developer account and obtain the necessary credentials. You need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scope when generating the access token along with the other scopes mentioned in the Setup giude.
+Refer to the [Setup guide](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/README.md#setup) to create a HubSpot developer account and obtain the necessary credentials. You need to add `crm.objects.contacts.read` and `crm.objects.contacts.write` scope when generating the access token along with the other scopes mentioned in the Setup giude.
 
 ### 2. Configuration
 

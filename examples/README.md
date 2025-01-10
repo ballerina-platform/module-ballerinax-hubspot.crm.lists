@@ -7,7 +7,7 @@ The `ballerinax/hubspot.crm.lists` connector provides practical examples illustr
 
 ## Prerequisites
 
-1. Generate HubSpot CRM Lists access token as described in the [Setup guide](../README.md#setup). Make sure to provide the necessary scopes for each example when generating the access token.
+1. Generate HubSpot CRM Lists access token as described in the [Setup guide](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/README.md#setup). Make sure to provide the necessary scopes for each example when generating the access token.
 2. For each example, create a `Config.toml` file in the root directory of the example and provide the access token. This file should look like the following:
 
     ```
