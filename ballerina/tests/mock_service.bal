@@ -141,6 +141,9 @@ http:Service mockService = service object {
 };
 
 function init() returns error? {
+    if isLiveServer {
+        return;
+    }
     io:println("Initiating mock server");
     check httpListner.attach(mockService, "/");
     check httpListner.start();
