@@ -34,12 +34,14 @@ These changes are done in order to improve the overall usability, and as workaro
         "required" : [ "recordIdsMissing", "recordIdsRemoved", "recordsIdsAdded" ],
         "type" : "object",
         ...
+    }
     ```
     - **Updated**:
     ```
     "MembershipsUpdateResponse" : {
         "type" : "object",
         ...
+    }
     ```
     - **Reason**: Although the API specifications says these feilds are required, the endpoint does not return all three fields `recordIdsMissing`, `recordIdsRemoved`, `recordsIdsAdded` for every request. This leads to a Payload Binding Error (`PayloadBindingClientError`). Removing these from required list ensures correct generation of connector client.
 
@@ -49,7 +51,7 @@ These changes are done in order to improve the overall usability, and as workaro
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
 
 ```bash
-bal openapi -i docs/spec/openapi.json --mode client --client-methods remote --license docs/license.txt -o ballerina
+bal openapi -i docs/spec/openapi.yaml --mode client --client-methods remote --license docs/license.txt -o ballerina
 ```
 Note: The license year is hardcoded to 2024, change if necessary.
 

@@ -155,7 +155,6 @@ import ballerina/oauth2;
     };
 
     final hslists:Client crmListClient = check new ({auth});
-
     ```
 
 ### Step 3: Invoke the connector operation
