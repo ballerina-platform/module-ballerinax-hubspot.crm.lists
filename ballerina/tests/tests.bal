@@ -22,8 +22,7 @@ configurable boolean isLiveServer = false; // Set this to true to run live tests
 configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string refreshToken = ?;
-
-Client hubspotClient = test:mock(Client);
+final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/lists" : "http://localhost:9090";
 
 string testListId = "";
 string testDynamicListId = "";
@@ -31,19 +30,23 @@ string testListName = "my-test-list";
 int:Signed32 testParentFolderId = 0;
 int:Signed32 testChildFolderId = 0;
 
-@test:BeforeSuite
-function setup() returns error? {
-    OAuth2RefreshTokenGrantConfig auth = {
-        clientId,
-        clientSecret,
-        refreshToken,
-        credentialBearer: oauth2:POST_BODY_BEARER
-    };
+final Client hubspotClient = check initClient();
+
+isolated function initClient() returns Client|error {
     if isLiveServer {
-        hubspotClient = check new Client(config = {auth});
-    } else {
-        hubspotClient = check new Client(config = {auth}, serviceUrl = "http://localhost:9090");
+        OAuth2RefreshTokenGrantConfig auth = {
+            clientId: clientId,
+            clientSecret: clientSecret,
+            refreshToken: refreshToken,
+            credentialBearer: oauth2:POST_BODY_BEARER
+        };
+        return check new ({auth}, serviceUrl);
     }
+    return check new ({
+        auth: {
+            token: "test-token"
+        }
+    }, serviceUrl);
 }
 
 // Create List
