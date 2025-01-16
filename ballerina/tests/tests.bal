@@ -19,9 +19,9 @@ import ballerina/oauth2;
 import ballerina/test;
 
 configurable boolean isLiveServer = false; // Set this to true to run live tests with hubspot API
-configurable string clientId = ?;
-configurable string clientSecret = ?;
-configurable string refreshToken = ?;
+configurable string clientId = "testId";
+configurable string clientSecret = "testSecret";
+configurable string refreshToken = "testToken";
 final string serviceUrl = isLiveServer ? "https://api.hubapi.com/crm/v3/lists" : "http://localhost:9090";
 
 string testListId = "";
