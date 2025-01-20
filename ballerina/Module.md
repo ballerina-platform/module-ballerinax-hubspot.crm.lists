@@ -170,7 +170,7 @@ public function main() returns error? {
         processingType: "MANUAL",
         name: "my-test-list"
     };
-    hslists:ListCreateResponse response = check crmListClient->/crm/v3/lists.post(payload);
+    hslists:ListCreateResponse response = check crmListClient->post_create(payload);
 }
 ```
 
