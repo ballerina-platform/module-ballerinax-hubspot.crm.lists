@@ -1,6 +1,6 @@
 ## Overview
 
-[HubSpot](https://www.hubspot.com/) is an AI-powered customer relationship management (CRM) platform. 
+[HubSpot](https://www.hubspot.com/) is an AI-powered customer relationship management (CRM) platform.
 
 The `ballerinax/hubspot.crm.lists` offers APIs to connect and interact with the [HubSpot CRM Lists API](https://developers.hubspot.com/docs/reference/api/crm/lists) endpoints, specifically based on the [HubSpot REST API](https://developers.hubspot.com/docs/reference/api/overview)
 
@@ -32,7 +32,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
    ![Adding a name and description for the test account](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/test_acc_3.png)
 
-### Step 3: Create a HubSpot App under your account.
+### Step 3: Create a HubSpot App under your account
 
 1. In your developer account, navigate to the "Apps" section. Click on "Create App"
 
@@ -40,7 +40,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 2. Provide the necessary details, including the app name and description.
 
-### Step 4: Configure the Authentication Flow.
+### Step 4: Configure the Authentication Flow
 
 1. Move to the Auth Tab.
 
@@ -62,7 +62,7 @@ Within app developer accounts, you can create a [developer test account](https:/
 
 ### Step 5: Get your Client ID and Client Secret
 
-- Navigate to the Auth section of your app. Make sure to save the provided Client ID and Client Secret.
+Navigate to the Auth section of your app. Make sure to save the provided Client ID and Client Secret.
 
    ![Client ID and secret of the App](https://raw.githubusercontent.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/main/docs/setup/resources/get_credentials.png)
 
@@ -76,7 +76,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
    https://app.hubspot.com/oauth/authorize?client_id=<YOUR_CLIENT_ID>&scope=<YOUR_SCOPES>&redirect_uri=<YOUR_REDIRECT_URI>
    ```
 
-   Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>` and `<YOUR_SCOPES>` with your specific value.
+   Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>`, and `<YOUR_SCOPES>` with your specific value.
 
 2. Paste it in the browser and select your developer test account to install the app when prompted. Provide consent for all scopes needed.
 
@@ -84,7 +84,7 @@ Before proceeding with the Quickstart, ensure you have obtained the Access Token
 
 3. A code will be displayed in the browser. Copy the code.
 
-4. Run the following curl command. Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI`> and `<YOUR_CLIENT_SECRET>` with your specific value. Use the code you received in the above step 3 as the `<CODE>`.
+4. Run the following curl command. Replace the `<YOUR_CLIENT_ID>`, `<YOUR_REDIRECT_URI>`, and `<YOUR_CLIENT_SECRET>` with your specific value. Use the code you received in the above step 3 as the `<CODE>`.
 
    - Linux/macOS
 
@@ -142,7 +142,7 @@ import ballerina/oauth2;
 
 2. Instantiate an `OAuth2RefreshTokenGrantConfig` with the obtained credentials and initialize the connector with it.
 
-    ```ballerina 
+    ```ballerina
     configurable string clientId = ?;
     configurable string clientSecret = ?;
     configurable string refreshToken = ?;
@@ -162,7 +162,7 @@ import ballerina/oauth2;
 Now, utilize the available connector operations. A sample use case is shown below.
 
 #### Create a CRM List
-    
+
 ```ballerina
 public function main() returns error? {
     hslists:ListCreateRequest payload = {
@@ -176,7 +176,7 @@ public function main() returns error? {
 
 ## Examples
 
-The `HubSpot CRM Lists` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/module-ballerinax-hubspot.crm.lists/tree/main/examples/), covering the following use cases:
+The `HubSpot CRM Lists` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/examples/), covering the following use cases:
 
 1. [Customer Support Ticket Manager](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/examples/customer_support_tickets_manager) - Integrates with HubSpot CRM Lists to create filtered lists of customer support tickets based on the priority level of the ticket.
 2. [Leads Tracker](https://github.com/ballerina-platform/module-ballerinax-hubspot.crm.lists/tree/main/examples/leads_tracker) - Integrates with HubSpot CRM Lists to create Manual Lists and add leads(contacts) to the lists.
