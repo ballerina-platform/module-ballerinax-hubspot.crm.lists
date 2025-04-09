@@ -44,7 +44,7 @@ function getLeadsIDs() returns string[] {
 
 function addRecordsToList(string listId, string typeOfLeads) returns error? {
     string[] payload = getLeadsIDs();
-    hslists:MembershipsUpdateResponse response = check hubspotClient->putListidMembershipsAdd_add(listId, payload);
+    hslists:MembershipsUpdateResponse response = check hubspotClient->putListIdMembershipsAddAdd(listId, payload);
     if response.recordsIdsAdded !is () {
         io:println("[+] Leads added to the " + typeOfLeads + " Leads List: ", response.recordsIdsAdded);
     }
@@ -64,22 +64,22 @@ public function main() returns error? {
     };
 
     // Create lists for leads with status 'New'
-    hslists:ListCreateResponse newLeadsListCreateResponse = check hubspotClient->post_create(payload = payloadForList);
+    hslists:ListCreateResponse newLeadsListCreateResponse = check hubspotClient->postCreate(payload = payloadForList);
     io:println("[+] New Leads List created successfully: ", newLeadsListCreateResponse.list.name);
 
     // Create a list for leads with status 'Open'
     payloadForList.name = "Open Leads";
-    hslists:ListCreateResponse openLeadsListCreateResponse = check hubspotClient->post_create(payload = payloadForList);
+    hslists:ListCreateResponse openLeadsListCreateResponse = check hubspotClient->postCreate(payload = payloadForList);
     io:println("[+] Open Leads List created successfully: ", openLeadsListCreateResponse.list.name);
 
     // Create a list for leads with status 'In progress'
     payloadForList.name = "In Progress Leads";
-    hslists:ListCreateResponse inProgressLeadsListCreateResponse = check hubspotClient->post_create(payload = payloadForList);
+    hslists:ListCreateResponse inProgressLeadsListCreateResponse = check hubspotClient->postCreate(payload = payloadForList);
     io:println("[+] In Progress Leads List created successfully: ", inProgressLeadsListCreateResponse.list.name);
 
     // Create a list for leads with status 'Contacted'
     payloadForList.name = "Contacted Leads";
-    hslists:ListCreateResponse contactedLeadsListCreateResponse = check hubspotClient->post_create(payload = payloadForList);
+    hslists:ListCreateResponse contactedLeadsListCreateResponse = check hubspotClient->postCreate(payload = payloadForList);
     io:println("[+] Contacted Leads List created successfully: ", contactedLeadsListCreateResponse.list.name);
 
     // adding leads to the list
