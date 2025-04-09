@@ -19,28 +19,32 @@
 
 import ballerina/http;
 
+public type PublicAssociationFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
+
 public type PublicPropertyAssociationFilterBranch record {
-    "PROPERTY_ASSOCIATION" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "PROPERTY_ASSOCIATION" filterBranchType = "PROPERTY_ASSOCIATION";
+    PublicPropertyAssociationFilterBranchFilterBranches[] filterBranches;
     string objectTypeId;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicPropertyAssociationFilterBranchFilters[] filters;
     string propertyWithObjectId;
     string operator;
 };
 
 public type PublicNumberPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
-    "NUMBER" operationType;
+    "NUMBER" operationType = "NUMBER";
     decimal value;
     string operator;
 };
+
+public type PublicUnifiedEventsFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
 public type PublicYearReference record {
     int:Signed32 hour?;
     int:Signed32 month;
     int:Signed32 millisecond?;
-    "YEAR" referenceType;
+    "YEAR" referenceType = "YEAR";
     int:Signed32 day;
     int:Signed32 minute?;
     int:Signed32 second?;
@@ -55,7 +59,7 @@ public type PublicRangedDatePropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     int:Signed32 upperBound;
     boolean requiresTimeZoneConversion;
-    "RANGED_DATE" operationType;
+    "RANGED_DATE" operationType = "RANGED_DATE";
     int:Signed32 lowerBound;
     string operator;
 };
@@ -67,70 +71,50 @@ public type ListFolderFetchResponse record {
 public type ListSearchRequest record {
     # The `listIds` that will be used to filter results by `listId`. If values are provided, then the response will only include results that have a `listId` in this array.
     # 
-    # If no value is provided, or if an empty list is provided, then the results will not be filtered by `listId`.
+    # If no value is provided, or if an empty list is provided, then the results will not be filtered by `listId`
     string[] listIds?;
-    # Value used to paginate through lists. The `offset` provided in the response can be used in the next request to fetch the next page of results. Defaults to `0` if no offset is provided.
+    # Value used to paginate through lists. The `offset` provided in the response can be used in the next request to fetch the next page of results. Defaults to `0` if no offset is provided
     int:Signed32 offset?;
-    # The `query` that will be used to search for lists by list name. If no `query` is provided, then the results will include all lists.
+    # The `query` that will be used to search for lists by list name. If no `query` is provided, then the results will include all lists
     string query?;
-    # The number of lists to include in the response. Defaults to `20` if no value is provided. The max `count` is `500`.
+    # The number of lists to include in the response. Defaults to `20` if no value is provided. The max `count` is `500`
     int:Signed32 count?;
     # The `processingTypes` that will be used to filter results by `processingType`. If values are provided, then the response will only include results that have a `processingType` in this array.
     # 
     # If no value is provided, or if an empty list is provided, then results will not be filtered by `processingType`.
     # 
-    # Valid `processingTypes` are: `MANUAL`, `SNAPSHOT`, or `DYNAMIC`.
+    # Valid `processingTypes` are: `MANUAL`, `SNAPSHOT`, or `DYNAMIC`
     string[] processingTypes?;
     # The property names of any additional list properties to include in the response. Properties that do not exist or that are empty for a particular list are not included in the response.
     # 
-    # By default, all requests will fetch the following properties for each list: `hs_list_size`, `hs_last_record_added_at`, `hs_last_record_removed_at`, `hs_folder_name`, and `hs_list_reference_count`.
+    # By default, all requests will fetch the following properties for each list: `hs_list_size`, `hs_last_record_added_at`, `hs_last_record_removed_at`, `hs_folder_name`, and `hs_list_reference_count`
     string[] additionalProperties?;
     string sort?;
-};
-
-# Represents the Queries record for the operation: putFoldersFolderidRename_rename
-public type PutFoldersFolderidRename_renameQueries record {
-    # 
-    string newFolderName?;
 };
 
 public type PublicInListFilter record {
     string listId;
     PublicInListFilterMetadata metadata?;
-    "IN_LIST" filterType;
+    "IN_LIST" filterType = "IN_LIST";
     string operator;
 };
 
 public type ListSearchResponse record {
-    # The total number of lists that match the search criteria.
+    # The total number of lists that match the search criteria
     int:Signed32 total;
-    # Value to be passed in a future request to paginate through list search results.
+    # Value to be passed in a future request to paginate through list search results
     int:Signed32 offset;
-    # The lists that matched the search criteria.
+    # The lists that matched the search criteria
     PublicObjectListSearchResult[] lists;
-    # Whether or not there are more results to page through.
+    # Whether or not there are more results to page through
     boolean hasMore;
-};
-
-# Represents the Queries record for the operation: getListidMembershipsJoinOrder_getpageorderedbyaddedtolistdate
-public type GetListidMembershipsJoinOrder_getpageorderedbyaddedtolistdateQueries record {
-    # The paging offset token for the page that comes `before` the previously requested records.
-    # 
-    # If provided, then the records in the response will be the records preceding the offset, sorted in *descending* order.
-    string before?;
-    # The number of records to return in the response. The maximum `limit` is 250.
-    int:Signed32 'limit = 100;
-    # The paging offset token for the page that comes `after` the previously requested records.
-    # 
-    # If provided, then the records in the response will be the records following the offset, sorted in *ascending* order. Takes precedence over the `before` offset.
-    string after?;
 };
 
 public type PublicSurveyMonkeyValueFilter record {
     PublicBoolPropertyOperation|PublicNumberPropertyOperation|PublicStringPropertyOperation|PublicDateTimePropertyOperation|PublicRangedDatePropertyOperation|PublicComparativePropertyUpdatedOperation|PublicComparativeDatePropertyOperation|PublicRollingDateRangePropertyOperation|PublicRollingPropertyUpdatedOperation|PublicEnumerationPropertyOperation|PublicAllPropertyTypesOperation|PublicRangedNumberPropertyOperation|PublicMultiStringPropertyOperation|PublicDatePropertyOperation|PublicCalendarDatePropertyOperation|PublicTimePointOperation|PublicRangedTimeOperation valueComparison;
     string surveyId;
     string surveyQuestion;
-    "SURVEY_MONKEY_VALUE" filterType;
+    "SURVEY_MONKEY_VALUE" filterType = "SURVEY_MONKEY_VALUE";
     string surveyAnswerRowId?;
     string surveyAnswerColId?;
     string operator;
@@ -139,7 +123,7 @@ public type PublicSurveyMonkeyValueFilter record {
 public type PublicRelativeComparativeTimestampRefineBy record {
     string comparison;
     PublicTimeOffset timeOffset;
-    "RELATIVE_COMPARATIVE" 'type;
+    "RELATIVE_COMPARATIVE" 'type = "RELATIVE_COMPARATIVE";
 };
 
 public type PublicCommunicationSubscriptionFilter record {
@@ -147,63 +131,63 @@ public type PublicCommunicationSubscriptionFilter record {
     string[] subscriptionIds;
     string channel;
     string[] acceptedOptStates;
-    "COMMUNICATION_SUBSCRIPTION" filterType;
+    "COMMUNICATION_SUBSCRIPTION" filterType = "COMMUNICATION_SUBSCRIPTION";
     string businessUnitId?;
 };
 
 public type ListsByIdResponse record {
-    # The object list definitions.
+    # The object list definitions
     PublicObjectList[] lists;
 };
 
+public type PublicNotAllFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
+
+# Represents the Queries record for the operation: get-/idmapping_translateLegacyListIdToListId
+public type GetIdmappingTranslateLegacyListIdToListIdQueries record {
+    # The legacy list id from lists v1 API
+    string legacyListId?;
+};
+
 public type PublicObjectListSearchResult record {
-    # The processing type of the list.
+    # The processing type of the list
     string processingType;
-    # The object type of the list.
+    # The object type of the list
     string objectTypeId;
-    # The ID of the user that last updated the list.
+    # The ID of the user that last updated the list
     string updatedById?;
-    # The time when the filters for this list were last updated.
+    # The time when the filters for this list were last updated
     string filtersUpdatedAt?;
-    # The **ILS ID** of the list.
+    # The **ILS ID** of the list
     string listId;
-    # The time when the list was created.
+    # The time when the list was created
     string createdAt?;
-    # The processing status of the list.
+    # The processing status of the list
     string processingStatus;
-    # The time when the list was deleted.
+    # The time when the list was deleted
     string deletedAt?;
-    # The version of the list.
+    # The version of the list
     int:Signed32 listVersion;
-    # The name of the list.
+    # The name of the list
     string name;
-    # The name and value of any additional properties that exist for this list and that were included in the search request.
+    # The name and value of any additional properties that exist for this list and that were included in the search request
     record {|string...;|} additionalProperties;
-    # The ID of the user that created the list.
+    # The ID of the user that created the list
     string createdById?;
-    # The time the list was last updated.
+    # The time the list was last updated
     string updatedAt?;
 };
 
-# Represents the Queries record for the operation: getListidMemberships_getpage
-public type GetListidMemberships_getpageQueries record {
-    # The paging offset token for the page that comes `before` the previously requested records.
-    # 
-    # If provided, then the records in the response will be the records preceding the offset, sorted in *descending* order.
-    string before?;
-    # The number of records to return in the response. The maximum `limit` is 250.
-    int:Signed32 'limit = 100;
-    # The paging offset token for the page that comes `after` the previously requested records.
-    # 
-    # If provided, then the records in the response will be the records following the offset, sorted in *ascending* order. Takes precedence over the `before` offset.
-    string after?;
+# Represents the Queries record for the operation: get-/object-type-id/{objectTypeId}/name/{listName}_getByName
+public type GetObjectTypeIdObjectTypeIdNameListNameGetByNameQueries record {
+    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
+    boolean includeFilters = false;
 };
 
 public type PublicRelativeRangedTimestampRefineBy record {
     PublicTimeOffset upperBoundOffset;
     string rangeType;
     PublicTimeOffset lowerBoundOffset;
-    "RELATIVE_RANGED" 'type;
+    "RELATIVE_RANGED" 'type = "RELATIVE_RANGED";
 };
 
 # Provides a set of configurations for controlling the behaviours when communicating with a remote HTTP endpoint.
@@ -214,31 +198,40 @@ public type ConnectionConfig record {|
     # The HTTP version understood by the client
     http:HttpVersion httpVersion = http:HTTP_2_0;
     # Configurations related to HTTP/1.x protocol
-    ClientHttp1Settings http1Settings?;
+    http:ClientHttp1Settings http1Settings = {};
     # Configurations related to HTTP/2 protocol
-    http:ClientHttp2Settings http2Settings?;
+    http:ClientHttp2Settings http2Settings = {};
     # The maximum time to wait (in seconds) for a response before closing the connection
-    decimal timeout = 60;
+    decimal timeout = 30;
     # The choice of setting `forwarded`/`x-forwarded` header
     string forwarded = "disable";
+    # Configurations associated with Redirection
+    http:FollowRedirects followRedirects?;
     # Configurations associated with request pooling
     http:PoolConfiguration poolConfig?;
     # HTTP caching related configurations
-    http:CacheConfig cache?;
+    http:CacheConfig cache = {};
     # Specifies the way of handling compression (`accept-encoding`) header
     http:Compression compression = http:COMPRESSION_AUTO;
     # Configurations associated with the behaviour of the Circuit Breaker
     http:CircuitBreakerConfig circuitBreaker?;
     # Configurations associated with retrying
     http:RetryConfig retryConfig?;
+    # Configurations associated with cookies
+    http:CookieConfig cookieConfig?;
     # Configurations associated with inbound response size limits
-    http:ResponseLimitConfigs responseLimits?;
+    http:ResponseLimitConfigs responseLimits = {};
     # SSL/TLS-related options
     http:ClientSecureSocket secureSocket?;
     # Proxy server related options
     http:ProxyConfig proxy?;
+    # Provides settings related to client socket configuration
+    http:ClientSocketConfig socketConfig = {};
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
+    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional, 
+    # and absent fields are handled as `nilable` types. Enabled by default.
+    boolean laxDataBinding = true;
 |};
 
 public type PublicIndexOffset record {
@@ -254,10 +247,16 @@ public type PublicIndexOffset record {
 };
 
 public type PublicNotAllFilterBranch record {
-    "NOT_ALL" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "NOT_ALL" filterBranchType = "NOT_ALL";
+    PublicNotAllFilterBranchFilterBranches[] filterBranches;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicNotAllFilterBranchFilters[] filters;
+};
+
+# Represents the Queries record for the operation: put-/{listId}/update-list-filters_updateListFilters
+public type PutListIdUpdateListFiltersUpdateListFiltersQueries record {
+    # A flag indicating whether or not the memberships added to the list as a result of the filter change should be enrolled in workflows that are relevant to this list
+    boolean enrollObjectsInWorkflows = false;
 };
 
 public type PublicBatchMigrationMapping record {
@@ -270,14 +269,14 @@ public type PublicFormSubmissionFilter record {
     string formId?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
-    "FORM_SUBMISSION" filterType;
+    "FORM_SUBMISSION" filterType = "FORM_SUBMISSION";
     "FILLED_OUT"|"NOT_FILLED_OUT" operator;
 };
 
 public type PublicRollingDateRangePropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     boolean requiresTimeZoneConversion;
-    "ROLLING_DATE_RANGE" operationType;
+    "ROLLING_DATE_RANGE" operationType = "ROLLING_DATE_RANGE";
     int:Signed32 numberOfDays;
     string operator;
 };
@@ -289,13 +288,13 @@ public type ApiCollectionResponseJoinTimeAndRecordId record {
 };
 
 public type PublicAssociationFilterBranch record {
-    "ASSOCIATION" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "ASSOCIATION" filterBranchType = "ASSOCIATION";
+    PublicAssociationFilterBranchFilterBranches[] filterBranches;
     string objectTypeId;
     string filterBranchOperator;
     int:Signed32 associationTypeId;
     string associationCategory;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicAssociationFilterBranchFilters[] filters;
     string operator;
 };
 
@@ -303,7 +302,7 @@ public type PublicQuarterReference record {
     int:Signed32 hour?;
     int:Signed32 month;
     int:Signed32 millisecond?;
-    "QUARTER" referenceType;
+    "QUARTER" referenceType = "QUARTER";
     int:Signed32 day;
     int:Signed32 minute?;
     int:Signed32 second?;
@@ -312,22 +311,24 @@ public type PublicQuarterReference record {
 public type PublicEnumerationPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     string[] values;
-    "ENUMERATION" operationType;
+    "ENUMERATION" operationType = "ENUMERATION";
     string operator;
 };
 
 public type PublicEmailSubscriptionFilter record {
     string subscriptionType?;
     string[] subscriptionIds;
-    "EMAIL_SUBSCRIPTION" filterType;
+    "EMAIL_SUBSCRIPTION" filterType = "EMAIL_SUBSCRIPTION";
     string[] acceptedStatuses;
 };
+
+public type PublicUnifiedEventsFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
 public type PublicTimePointOperation record {
     string endpointBehavior?;
     boolean includeObjectsWithNoValueSet;
     string propertyParser?;
-    "TIME_POINT" operationType;
+    "TIME_POINT" operationType = "TIME_POINT";
     PublicDatePoint|PublicIndexedTimePoint|PublicPropertyReferencedTime timePoint;
     string 'type;
     string operator;
@@ -339,11 +340,11 @@ public type ListFolderCreateResponse record {
 
 # Provides API key configurations needed when communicating with a remote HTTP endpoint.
 public type ApiKeysConfig record {|
-    string private\-app;
+    string privateApp;
 |};
 
 public type PublicAllHistoryRefineBy record {
-    "ALL_HISTORY" 'type;
+    "ALL_HISTORY" 'type = "ALL_HISTORY";
 };
 
 public type ListUpdateResponse record {
@@ -351,18 +352,36 @@ public type ListUpdateResponse record {
 };
 
 public type PublicNotAnyFilterBranch record {
-    "NOT_ANY" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "NOT_ANY" filterBranchType = "NOT_ANY";
+    PublicNotAnyFilterBranchFilterBranches[] filterBranches;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicNotAnyFilterBranchFilters[] filters;
 };
 
 public type PublicIndexedTimePoint record {
     PublicIndexOffset offset?;
     string timezoneSource?;
     PublicNowReference|PublicTodayReference|PublicWeekReference|PublicFiscalQuarterReference|PublicFiscalYearReference|PublicYearReference|PublicQuarterReference|PublicMonthReference indexReference;
-    "INDEXED" timeType;
+    "INDEXED" timeType = "INDEXED";
     string zoneId;
+};
+
+public type PublicOrFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
+
+public type PublicRestrictedFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
+
+# Represents the Queries record for the operation: get-/{listId}/memberships/join-order_getPageOrderedByAddedToListDate
+public type GetListIdMembershipsJoinOrderGetPageOrderedByAddedToListDateQueries record {
+    # The paging offset token for the page that comes `before` the previously requested records.
+    # 
+    # If provided, then the records in the response will be the records preceding the offset, sorted in *descending* order
+    string before?;
+    # The number of records to return in the response. The maximum `limit` is 250
+    int:Signed32 'limit = 100;
+    # The paging offset token for the page that comes `after` the previously requested records.
+    # 
+    # If provided, then the records in the response will be the records following the offset, sorted in *ascending* order. Takes precedence over the `before` offset
+    string after?;
 };
 
 public type PublicRangedTimeOperation record {
@@ -371,7 +390,7 @@ public type PublicRangedTimeOperation record {
     PublicDatePoint|PublicIndexedTimePoint|PublicPropertyReferencedTime upperBoundTimePoint;
     string propertyParser?;
     string operationType;
-    "TIME_RANGED" 'type;
+    "TIME_RANGED" 'type = "TIME_RANGED";
     string lowerBoundEndpointBehavior?;
     string operator;
     PublicDatePoint|PublicIndexedTimePoint|PublicPropertyReferencedTime lowerBoundTimePoint;
@@ -379,15 +398,15 @@ public type PublicRangedTimeOperation record {
 
 public type PublicWebinarFilter record {
     string webinarId?;
-    "WEBINAR" filterType;
+    "WEBINAR" filterType = "WEBINAR";
     string operator;
 };
 
 public type MembershipsUpdateResponse record {
-    # The IDs of the records that were `removed` from the list.
+    # The IDs of the records that were `removed` from the list
     string[] recordIdsRemoved?;
     string[] recordsIdsAdded?;
-    # The IDs of the records that were `missing` (e.g. did not exist in the portal) and so were not `added` or `removed`.
+    # The IDs of the records that were `missing` (e.g. did not exist in the portal) and so were not `added` or `removed`
     string[] recordIdsMissing?;
 };
 
@@ -396,47 +415,47 @@ public type ListCreateResponse record {
 };
 
 public type PublicUnifiedEventsFilterBranch record {
-    "UNIFIED_EVENTS" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "UNIFIED_EVENTS" filterBranchType = "UNIFIED_EVENTS";
+    PublicUnifiedEventsFilterBranchFilterBranches[] filterBranches;
     string eventTypeId;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy?;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicUnifiedEventsFilterBranchFilters[] filters;
     "HAS_COMPLETED"|"HAS_NOT_COMPLETED" operator;
 };
 
 public type PublicNumOccurrencesRefineBy record {
     int:Signed32 maxOccurrences?;
-    "NUM_OCCURRENCES" 'type;
+    "NUM_OCCURRENCES" 'type = "NUM_OCCURRENCES";
     int:Signed32 minOccurrences?;
 };
 
 public type PublicObjectList record {
-    # The processing type of the list.
+    # The processing type of the list
     string processingType;
-    # The object type of the list.
+    # The object type of the list
     string objectTypeId;
-    # The ID of the user that last updated the list.
+    # The ID of the user that last updated the list
     string updatedById?;
-    # The time when the filters for this list were last updated.
+    # The time when the filters for this list were last updated
     string filtersUpdatedAt?;
-    # The **ILS ID** of the list.
+    # The **ILS ID** of the list
     string listId;
-    # The time when the list was created.
+    # The time when the list was created
     string createdAt?;
-    # The processing status of the list.
+    # The processing status of the list
     string processingStatus;
-    # The time when the list was deleted.
+    # The time when the list was deleted
     string deletedAt?;
-    # The version of the list.
+    # The version of the list
     int:Signed32 listVersion;
     int size?;
-    # The name of the list.
+    # The name of the list
     string name;
-    # The ID of the user that created the list.
+    # The ID of the user that created the list
     string createdById?;
     PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch filterBranch?;
-    # The time the list was last updated.
+    # The time the list was last updated
     string updatedAt?;
 };
 
@@ -450,9 +469,23 @@ public type RecordListMembership record {
 public type PublicCtaAnalyticsFilter record {
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
-    "CTA" filterType;
+    "CTA" filterType = "CTA";
     string ctaName;
     string operator;
+};
+
+# Represents the Queries record for the operation: get-/{listId}/memberships_getPage
+public type GetListIdMembershipsGetPageQueries record {
+    # The paging offset token for the page that comes `before` the previously requested records.
+    # 
+    # If provided, then the records in the response will be the records preceding the offset, sorted in *descending* order
+    string before?;
+    # The number of records to return in the response. The maximum `limit` is 250
+    int:Signed32 'limit = 100;
+    # The paging offset token for the page that comes `after` the previously requested records.
+    # 
+    # If provided, then the records in the response will be the records following the offset, sorted in *ascending* order. Takes precedence over the `before` offset
+    string after?;
 };
 
 public type ListFetchResponse record {
@@ -460,40 +493,42 @@ public type ListFetchResponse record {
 };
 
 public type PublicSetOccurrencesRefineBy record {
-    "SET_OCCURRENCES" 'type;
+    "SET_OCCURRENCES" 'type = "SET_OCCURRENCES";
     string setType;
 };
 
 public type PublicConstantFilter record {
     boolean shouldAccept;
     string 'source?;
-    "CONSTANT" filterType;
+    "CONSTANT" filterType = "CONSTANT";
 };
 
+public type PublicNotAnyFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
+
 public type PublicListFolder record {
-    # The time the folder was created at.
+    # The time the folder was created at
     string createdAt?;
-    # The Id of the folder this folder is in, the root folder is represented as 0.
+    # The Id of the folder this folder is in, the root folder is represented as 0
     int:Signed32 parentFolderId;
     PublicListFolder[] childNodes;
-    # The name of the folder.
+    # The name of the folder
     string name?;
-    # The Id of the folder.
+    # The Id of the folder
     int:Signed32 id;
-    # An array of list Id's contained in this folder.
+    # An array of list Id's contained in this folder
     int:Signed32[] childLists;
-    # The time that the contents of the folder was last updated at.
+    # The time that the contents of the folder was last updated at
     string updatedContentsAt?;
-    # The user Id of the owner of the folder.
+    # The user Id of the owner of the folder
     int:Signed32 userId?;
-    # The time the folder was last updated at.
+    # The time the folder was last updated at
     string updatedAt?;
 };
 
 public type PublicComparativeDatePropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     string defaultComparisonValue?;
-    "COMPARATIVE_DATE" operationType;
+    "COMPARATIVE_DATE" operationType = "COMPARATIVE_DATE";
     string comparisonPropertyName;
     string operator;
 };
@@ -506,7 +541,7 @@ public type ApiCollectionResponseRecordListMembershipNoPaging record {
 public type PublicRangedNumberPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     int:Signed32 upperBound;
-    "NUMBER_RANGED" operationType;
+    "NUMBER_RANGED" operationType = "NUMBER_RANGED";
     int:Signed32 lowerBound;
     string operator;
 };
@@ -516,14 +551,16 @@ public type PublicPageViewAnalyticsFilter record {
     boolean enableTracking?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
     string pageUrl;
-    "PAGE_VIEW" filterType;
+    "PAGE_VIEW" filterType = "PAGE_VIEW";
     string operator;
 };
+
+public type PublicAndFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
 public type PublicComparativePropertyUpdatedOperation record {
     boolean includeObjectsWithNoValueSet;
     string defaultComparisonValue?;
-    "COMPARATIVE_PROPERTY_UPDATED" operationType;
+    "COMPARATIVE_PROPERTY_UPDATED" operationType = "COMPARATIVE_PROPERTY_UPDATED";
     string comparisonPropertyName;
     string operator;
 };
@@ -535,57 +572,37 @@ public type MembershipChangeRequest record {
     string[] recordIdsToAdd;
 };
 
-# Provides settings related to HTTP/1.x protocol.
-public type ClientHttp1Settings record {|
-    # Specifies whether to reuse a connection for multiple requests
-    http:KeepAlive keepAlive = http:KEEPALIVE_AUTO;
-    # The chunking behaviour of the request
-    http:Chunking chunking = http:CHUNKING_AUTO;
-    # Proxy server related options
-    ProxyConfig proxy?;
-|};
-
 public type PublicIntegrationEventFilter record {
     int:Signed32 eventTypeId;
     PublicEventFilterMetadata[] filterLines;
-    "INTEGRATION_EVENT" filterType;
+    "INTEGRATION_EVENT" filterType = "INTEGRATION_EVENT";
 };
 
 public type PublicAndFilterBranch record {
-    "AND" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "AND" filterBranchType = "AND";
+    PublicAndFilterBranchFilterBranches[] filterBranches;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicAndFilterBranchFilters[] filters;
 };
 
 public type PreviousPage record {
-    # The offset of the previous page of records.
+    # The offset of the previous page of records
     string before;
-    # A direct link to the request for the previous page of records.
+    # A direct link to the request for the previous page of records
     string link?;
 };
 
-# Represents the Queries record for the operation: getFolders_getall
-public type GetFolders_getallQueries record {
-    # The Id of the folder to retrieve.
-    string folderId = "0";
-};
-
-# Represents the Queries record for the operation: getListid_getbyid
-public type GetListid_getbyidQueries record {
-    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
-    boolean includeFilters = false;
-};
+public type PublicPropertyAssociationFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
 public type PublicAbsoluteComparativeTimestampRefineBy record {
     string comparison;
-    "ABSOLUTE_COMPARATIVE" 'type;
+    "ABSOLUTE_COMPARATIVE" 'type = "ABSOLUTE_COMPARATIVE";
     int timestamp;
 };
 
 public type PublicSurveyMonkeyFilter record {
     string surveyId;
-    "SURVEY_MONKEY" filterType;
+    "SURVEY_MONKEY" filterType = "SURVEY_MONKEY";
     string operator;
 };
 
@@ -593,22 +610,14 @@ public type PublicAbsoluteRangedTimestampRefineBy record {
     string rangeType;
     int upperTimestamp;
     int lowerTimestamp;
-    "ABSOLUTE_RANGED" 'type;
-};
-
-# Represents the Queries record for the operation: putListidUpdateListName_updatename
-public type PutListidUpdateListName_updatenameQueries record {
-    # The name to update the list to.
-    string listName?;
-    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
-    boolean includeFilters = false;
+    "ABSOLUTE_RANGED" 'type = "ABSOLUTE_RANGED";
 };
 
 public type PublicDatePropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     string month;
     int:Signed32 year;
-    "DATE" operationType;
+    "DATE" operationType = "DATE";
     int:Signed32 day;
     string operator;
 };
@@ -617,7 +626,7 @@ public type PublicEventAnalyticsFilter record {
     string eventId;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
-    "EVENT" filterType;
+    "EVENT" filterType = "EVENT";
     string operator;
 };
 
@@ -626,14 +635,14 @@ public type PublicUnifiedEventsFilter record {
     string eventTypeId?;
     PublicEventFilterMetadata[] filterLines;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
-    "UNIFIED_EVENTS" filterType;
+    "UNIFIED_EVENTS" filterType = "UNIFIED_EVENTS";
 };
 
 public type PublicFiscalYearReference record {
     int:Signed32 hour?;
     int:Signed32 month;
     int:Signed32 millisecond?;
-    "FISCAL_YEAR" referenceType;
+    "FISCAL_YEAR" referenceType = "FISCAL_YEAR";
     int:Signed32 day;
     int:Signed32 minute?;
     int:Signed32 second?;
@@ -643,21 +652,17 @@ public type PublicCalendarDatePropertyOperation record {
     boolean useFiscalYear?;
     "JANUARY"|"FEBRUARY"|"MARCH"|"APRIL"|"MAY"|"JUNE"|"JULY"|"AUGUST"|"SEPTEMBER"|"OCTOBER"|"NOVEMBER"|"DECEMBER" fiscalYearStart?;
     boolean includeObjectsWithNoValueSet;
-    "CALENDAR_DATE" operationType;
+    "CALENDAR_DATE" operationType = "CALENDAR_DATE";
     int:Signed32 timeUnitCount?;
     string operator;
     string timeUnit;
 };
 
-# Represents the Queries record for the operation: getObjectTypeIdObjecttypeidNameListname_getbyname
-public type GetObjectTypeIdObjecttypeidNameListname_getbynameQueries record {
-    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
-    boolean includeFilters = false;
-};
+public type PublicOrFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
 public type PublicPropertyFilter record {
     string property;
-    "PROPERTY" filterType;
+    "PROPERTY" filterType = "PROPERTY";
     PublicBoolPropertyOperation|PublicNumberPropertyOperation|PublicStringPropertyOperation|PublicDateTimePropertyOperation|PublicRangedDatePropertyOperation|PublicComparativePropertyUpdatedOperation|PublicComparativeDatePropertyOperation|PublicRollingDateRangePropertyOperation|PublicRollingPropertyUpdatedOperation|PublicEnumerationPropertyOperation|PublicAllPropertyTypesOperation|PublicRangedNumberPropertyOperation|PublicMultiStringPropertyOperation|PublicDatePropertyOperation|PublicCalendarDatePropertyOperation|PublicTimePointOperation|PublicRangedTimeOperation operation;
 };
 
@@ -665,7 +670,7 @@ public type PublicNumAssociationsFilter record {
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy;
     int:Signed32 associationTypeId;
     string associationCategory;
-    "NUM_ASSOCIATIONS" filterType;
+    "NUM_ASSOCIATIONS" filterType = "NUM_ASSOCIATIONS";
 };
 
 public type PublicAssociationInListFilter record {
@@ -674,9 +679,19 @@ public type PublicAssociationInListFilter record {
     string toObjectType?;
     int:Signed32 associationTypeId;
     string associationCategory;
-    "ASSOCIATION" filterType;
+    "ASSOCIATION" filterType = "ASSOCIATION";
     string toObjectTypeId?;
     string operator;
+};
+
+public type PublicRestrictedFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
+
+# Represents the Queries record for the operation: put-/{listId}/update-list-name_updateName
+public type PutListIdUpdateListNameUpdateNameQueries record {
+    # The name to update the list to
+    string listName?;
+    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
+    boolean includeFilters = false;
 };
 
 public type PublicEmailEventFilter record {
@@ -685,34 +700,46 @@ public type PublicEmailEventFilter record {
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
     string appId;
     string emailId;
-    "EMAIL_EVENT" filterType;
+    "EMAIL_EVENT" filterType = "EMAIL_EVENT";
     "LINK_CLICKED"|"MARKED_SPAM"|"OPENED"|"OPENED_BUT_LINK_NOT_CLICKED"|"OPENED_BUT_NOT_REPLIED"|"REPLIED"|"UNSUBSCRIBED"|"BOUNCED"|"RECEIVED"|"RECEIVED_BUT_NOT_OPENED"|"SENT"|"SENT_BUT_LINK_NOT_CLICKED"|"SENT_BUT_NOT_RECEIVED" operator;
 };
 
 public type PublicOrFilterBranch record {
-    "OR" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "OR" filterBranchType = "OR";
+    PublicOrFilterBranchFilterBranches[] filterBranches;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicOrFilterBranchFilters[] filters;
 };
 
 public type PublicFormSubmissionOnPageFilter record {
     string formId?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy?;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy?;
-    "FORM_SUBMISSION_ON_PAGE" filterType;
+    "FORM_SUBMISSION_ON_PAGE" filterType = "FORM_SUBMISSION_ON_PAGE";
     string pageId;
     "FILLED_OUT"|"NOT_FILLED_OUT" operator;
 };
 
 public type PublicAdsTimeFilter record {
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation pruningRefineBy;
-    "ADS_TIME" filterType;
+    "ADS_TIME" filterType = "ADS_TIME";
+};
+
+# Represents the Queries record for the operation: get-/folders_getAll
+public type GetFoldersGetAllQueries record {
+    # The Id of the folder to retrieve
+    string folderId = "0";
+};
+
+# Represents the Queries record for the operation: get-/{listId}_getById
+public type GetListIdGetByIdQueries record {
+    # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
+    boolean includeFilters = false;
 };
 
 public type PublicStringPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
-    "STRING" operationType;
+    "STRING" operationType = "STRING";
     string value;
     string operator;
 };
@@ -721,7 +748,7 @@ public type PublicPropertyAssociationInListFilter record {
     string listId;
     PublicNumOccurrencesRefineBy|PublicSetOccurrencesRefineBy|PublicRelativeComparativeTimestampRefineBy|PublicRelativeRangedTimestampRefineBy|PublicAbsoluteComparativeTimestampRefineBy|PublicAbsoluteRangedTimestampRefineBy|PublicAllHistoryRefineBy|PublicTimePointOperation|PublicRangedTimeOperation coalescingRefineBy;
     string propertyWithObjectId;
-    "PROPERTY_ASSOCIATION" filterType;
+    "PROPERTY_ASSOCIATION" filterType = "PROPERTY_ASSOCIATION";
     string toObjectTypeId?;
     string operator;
 };
@@ -729,7 +756,7 @@ public type PublicPropertyAssociationInListFilter record {
 public type PublicPropertyReferencedTime record {
     string timezoneSource?;
     string property;
-    "PROPERTY_REFERENCED" timeType;
+    "PROPERTY_REFERENCED" timeType = "PROPERTY_REFERENCED";
     string zoneId;
     string referenceType;
 };
@@ -741,9 +768,11 @@ public type Paging record {
 
 public type PublicPrivacyAnalyticsFilter record {
     string privacyName;
-    "PRIVACY" filterType;
+    "PRIVACY" filterType = "PRIVACY";
     string operator;
 };
+
+public type PublicNotAnyFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
 public type ListFilterUpdateRequest record {
     PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch filterBranch;
@@ -752,7 +781,7 @@ public type ListFilterUpdateRequest record {
 public type PublicMultiStringPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     string[] values;
-    "MULTISTRING" operationType;
+    "MULTISTRING" operationType = "MULTISTRING";
     string operator;
 };
 
@@ -760,7 +789,7 @@ public type PublicWeekReference record {
     "MONDAY"|"TUESDAY"|"WEDNESDAY"|"THURSDAY"|"FRIDAY"|"SATURDAY"|"SUNDAY" dayOfWeek;
     int:Signed32 hour?;
     int:Signed32 millisecond?;
-    "WEEK" referenceType;
+    "WEEK" referenceType = "WEEK";
     int:Signed32 minute?;
     int:Signed32 second?;
 };
@@ -768,7 +797,7 @@ public type PublicWeekReference record {
 public type PublicTodayReference record {
     int:Signed32 hour?;
     int:Signed32 millisecond?;
-    "TODAY" referenceType;
+    "TODAY" referenceType = "TODAY";
     int:Signed32 minute?;
     int:Signed32 second?;
 };
@@ -778,22 +807,36 @@ public type PublicAdsSearchFilter record {
     string entityType;
     string adNetwork;
     string searchTermType;
-    "ADS_SEARCH" filterType;
+    "ADS_SEARCH" filterType = "ADS_SEARCH";
     string operator;
+};
+
+# Represents the Queries record for the operation: put-/folders/{folderId}/rename_rename
+public type PutFoldersFolderIdRenameRenameQueries record {
+    # 
+    string newFolderName?;
+};
+
+# Represents the Queries record for the operation: get-/_getAll
+public type GetGetAllQueries record {
+    # The **ILS IDs** of the lists to fetch
+    string[] listIds?;
+    # A flag indicating whether or not the response object list definitions should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
+    boolean includeFilters = false;
 };
 
 public type PublicNowReference record {
     int:Signed32 hour?;
     int:Signed32 millisecond?;
-    "NOW" referenceType;
+    "NOW" referenceType = "NOW";
     int:Signed32 minute?;
     int:Signed32 second?;
 };
 
 public type ListFolderCreateRequest record {
-    # The folder this should be created in, if not specified will be created in the root folder 0.
+    # The folder this should be created in, if not specified will be created in the root folder 0
     string parentFolderId?;
-    # The name of the folder to be created.
+    # The name of the folder to be created
     string name;
 };
 
@@ -802,35 +845,23 @@ public type JoinTimeAndRecordId record {
     string membershipTimestamp;
 };
 
-# Represents the Queries record for the operation: getIdmapping_translatelegacylistidtolistid
-public type GetIdmapping_translatelegacylistidtolistidQueries record {
-    # The legacy list id from lists v1 API.
-    string legacyListId?;
-};
-
 public type PublicRestrictedFilterBranch record {
-    "RESTRICTED" filterBranchType;
-    (PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch)[] filterBranches;
+    "RESTRICTED" filterBranchType = "RESTRICTED";
+    PublicRestrictedFilterBranchFilterBranches[] filterBranches;
     string filterBranchOperator;
-    (PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter)[] filters;
+    PublicRestrictedFilterBranchFilters[] filters;
 };
 
 public type PublicMonthReference record {
     int:Signed32 hour?;
     int:Signed32 millisecond?;
-    "MONTH" referenceType;
+    "MONTH" referenceType = "MONTH";
     int:Signed32 day;
     int:Signed32 minute?;
     int:Signed32 second?;
 };
 
-# Represents the Queries record for the operation: get_getall
-public type Get_getallQueries record {
-    # The **ILS IDs** of the lists to fetch.
-    string[] listIds?;
-    # A flag indicating whether or not the response object list definitions should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response.
-    boolean includeFilters = false;
-};
+public type PublicNotAllFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
 # OAuth2 Refresh Token Grant Configs
 public type OAuth2RefreshTokenGrantConfig record {|
@@ -842,26 +873,20 @@ public type OAuth2RefreshTokenGrantConfig record {|
 public type PublicDateTimePropertyOperation record {
     boolean includeObjectsWithNoValueSet;
     boolean requiresTimeZoneConversion;
-    "DATETIME" operationType;
+    "DATETIME" operationType = "DATETIME";
     string operator;
     int:Signed32 timestamp;
 };
 
 public type PublicCampaignInfluencedFilter record {
     string campaignId;
-    "CAMPAIGN_INFLUENCED" filterType;
-};
-
-# Represents the Queries record for the operation: putListidUpdateListFilters_updatelistfilters
-public type PutListidUpdateListFilters_updatelistfiltersQueries record {
-    # A flag indicating whether or not the memberships added to the list as a result of the filter change should be enrolled in workflows that are relevant to this list.
-    boolean enrollObjectsInWorkflows = false;
+    "CAMPAIGN_INFLUENCED" filterType = "CAMPAIGN_INFLUENCED";
 };
 
 public type ListMoveRequest record {
-    # The Id of the list to move.
+    # The Id of the list to move
     string listId;
-    # The Id of folder to move the list to, the root folder is Id 0.
+    # The Id of folder to move the list to, the root folder is Id 0
     string newFolderId;
 };
 
@@ -869,11 +894,15 @@ public type PublicFiscalQuarterReference record {
     int:Signed32 hour?;
     int:Signed32 month;
     int:Signed32 millisecond?;
-    "FISCAL_QUARTER" referenceType;
+    "FISCAL_QUARTER" referenceType = "FISCAL_QUARTER";
     int:Signed32 day;
     int:Signed32 minute?;
     int:Signed32 second?;
 };
+
+public type PublicPropertyAssociationFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
+
+public type PublicAssociationFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
 public type PublicMigrationMapping record {
     # The V3 list id for the list
@@ -882,43 +911,32 @@ public type PublicMigrationMapping record {
     string legacyListId;
 };
 
-# Proxy server configurations to be used with the HTTP client endpoint.
-public type ProxyConfig record {|
-    # Host name of the proxy server
-    string host = "";
-    # Proxy server port
-    int port = 0;
-    # Proxy server username
-    string userName = "";
-    # Proxy server password
-    @display {label: "", kind: "password"}
-    string password = "";
-|};
+public type PublicAndFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
 public type ListCreateRequest record {
-    # The object type ID of the type of objects that the list will store.
+    # The object type ID of the type of objects that the list will store
     string objectTypeId;
-    # The processing type of the list. One of: `SNAPSHOT`, `MANUAL`, or `DYNAMIC`.
+    # The processing type of the list. One of: `SNAPSHOT`, `MANUAL`, or `DYNAMIC`
     string processingType;
-    # The list of custom properties to tie to the list. Custom property name is the key, the value is the value.
+    # The list of custom properties to tie to the list. Custom property name is the key, the value is the value
     record {|string...;|} customProperties?;
-    # The ID of the folder that the list should be created in. If left blank, then the list will be created in the root of the list folder structure.
+    # The ID of the folder that the list should be created in. If left blank, then the list will be created in the root of the list folder structure
     int:Signed32 listFolderId?;
-    # The name of the list, which must be globally unique across all public lists in the portal.
+    # The name of the list, which must be globally unique across all public lists in the portal
     string name;
     PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch filterBranch?;
 };
 
 public type PublicBoolPropertyOperation record {
     boolean includeObjectsWithNoValueSet;
-    "BOOL" operationType;
+    "BOOL" operationType = "BOOL";
     boolean value;
     string operator;
 };
 
 public type PublicAllPropertyTypesOperation record {
     boolean includeObjectsWithNoValueSet;
-    "ALL_PROPERTY" operationType;
+    "ALL_PROPERTY" operationType = "ALL_PROPERTY";
     string operator;
 };
 
@@ -933,7 +951,7 @@ public type PublicDatePoint record {
     int:Signed32 year;
     string timezoneSource?;
     int:Signed32 millisecond?;
-    "DATE" timeType;
+    "DATE" timeType = "DATE";
     string zoneId;
     int:Signed32 day;
     int:Signed32 minute?;
@@ -947,15 +965,15 @@ public type PublicTimeOffset record {
 };
 
 public type NextPage record {
-    # A direct link to the request for the next page of records.
+    # A direct link to the request for the next page of records
     string link?;
-    # The offset for the next page of records.
+    # The offset for the next page of records
     string after;
 };
 
 public type PublicRollingPropertyUpdatedOperation record {
     boolean includeObjectsWithNoValueSet;
-    "ROLLING_PROPERTY_UPDATED" operationType;
+    "ROLLING_PROPERTY_UPDATED" operationType = "ROLLING_PROPERTY_UPDATED";
     int:Signed32 numberOfDays;
     string operator;
 };
