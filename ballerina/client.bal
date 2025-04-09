@@ -17,6 +17,7 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerina/data.jsondata;
 import ballerina/http;
 
 public isolated client class Client {
@@ -38,13 +39,7 @@ public isolated client class Client {
         self.clientEp = check new (serviceUrl, httpClientConfig);
     }
 
-    # Update List Name
-    #
-    # + listId - The **ILS ID** of the list to update
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - successful operation 
-    remote isolated function putListIdUpdateListNameUpdateName(string listId, map<string|string[]> headers = {}, *PutListIdUpdateListNameUpdateNameQueries queries) returns ListUpdateResponse|error {
+    resource isolated function put [string listId]/update\-list\-name(map<string|string[]> headers = {}, *PutListIdUpdateListNameUpdateNameQueries queries) returns ListUpdateResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}/update-list-name`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -56,12 +51,7 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Add and/or Remove Records from a List
-    #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
-    # + headers - Headers to be sent with the request 
-    # + return - successful operation 
-    remote isolated function putListIdMembershipsAddAndRemoveAddAndRemove(string listId, MembershipChangeRequest payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
+    resource isolated function put [string listId]/memberships/add\-and\-remove(MembershipChangeRequest payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships/add-and-remove`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -69,7 +59,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
@@ -80,7 +70,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function getListIdGetById(string listId, map<string|string[]> headers = {}, *GetListIdGetByIdQueries queries) returns ListFetchResponse|error {
+    resource isolated function get [string listId](map<string|string[]> headers = {}, *GetListIdGetByIdQueries queries) returns ListFetchResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -96,7 +86,7 @@ public isolated client class Client {
     # + listId - The **ILS ID** of the list to delete
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    remote isolated function deleteListIdRemove(string listId, map<string|string[]> headers = {}) returns error? {
+    resource isolated function delete [string listId](map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/${getEncodedUri(listId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -106,13 +96,7 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
-    # Update List Filter Definition
-    #
-    # + listId - The **ILS ID** of the list to update
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - successful operation 
-    remote isolated function putListIdUpdateListFiltersUpdateListFilters(string listId, ListFilterUpdateRequest payload, map<string|string[]> headers = {}, *PutListIdUpdateListFiltersUpdateListFiltersQueries queries) returns ListUpdateResponse|error {
+    resource isolated function put [string listId]/update\-list\-filters(ListFilterUpdateRequest payload, map<string|string[]> headers = {}, *PutListIdUpdateListFiltersUpdateListFiltersQueries queries) returns ListUpdateResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}/update-list-filters`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -121,7 +105,7 @@ public isolated client class Client {
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
@@ -130,7 +114,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function postSearchDoSearch(ListSearchRequest payload, map<string|string[]> headers = {}) returns ListSearchResponse|error {
+    resource isolated function post search(ListSearchRequest payload, map<string|string[]> headers = {}) returns ListSearchResponse|error {
         string resourcePath = string `/search`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -138,16 +122,12 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # Moves a list to a given folder
-    #
-    # + headers - Headers to be sent with the request 
-    # + return - No content 
-    remote isolated function putFoldersMoveListMoveList(ListMoveRequest payload, map<string|string[]> headers = {}) returns error? {
+    resource isolated function put folders/move\-list(ListMoveRequest payload, map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/folders/move-list`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -155,7 +135,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
@@ -165,7 +145,7 @@ public isolated client class Client {
     # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function putListIdMembershipsAddAdd(string listId, string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
+    resource isolated function put [string listId]/memberships/add(string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships/add`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -173,19 +153,12 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Fetch List by Name
-    #
-    # + listName - The name of the list to fetch. This is **not** case sensitive
-    # + objectTypeId - The object type ID of the object types stored by the list to fetch. For example, `0-1` for a `CONTACT` list
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - successful operation 
-    remote isolated function getObjectTypeIdObjectTypeIdNameListNameGetByName(string listName, string objectTypeId, map<string|string[]> headers = {}, *GetObjectTypeIdObjectTypeIdNameListNameGetByNameQueries queries) returns ListFetchResponse|error {
+    resource isolated function get object\-type\-id/[string objectTypeId]/name/[string listName](map<string|string[]> headers = {}, *GetObjectTypeIdObjectTypeIdNameListNameGetByNameQueries queries) returns ListFetchResponse|error {
         string resourcePath = string `/object-type-id/${getEncodedUri(objectTypeId)}/name/${getEncodedUri(listName)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -202,7 +175,7 @@ public isolated client class Client {
     # + newParentFolderId -
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function putFoldersFolderIdMoveNewParentFolderIdMove(string folderId, string newParentFolderId, map<string|string[]> headers = {}) returns ListFolderFetchResponse|error {
+    resource isolated function put folders/[string folderId]/move/[string newParentFolderId](map<string|string[]> headers = {}) returns ListFolderFetchResponse|error {
         string resourcePath = string `/folders/${getEncodedUri(folderId)}/move/${getEncodedUri(newParentFolderId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -218,7 +191,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function getIdmappingTranslateLegacyListIdToListId(map<string|string[]> headers = {}, *GetIdmappingTranslateLegacyListIdToListIdQueries queries) returns PublicMigrationMapping|error {
+    resource isolated function get idmapping(map<string|string[]> headers = {}, *GetIdmappingTranslateLegacyListIdToListIdQueries queries) returns PublicMigrationMapping|error {
         string resourcePath = string `/idmapping`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -233,7 +206,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function postIdmappingTranslateLegacyListIdToListIdBatch(string[] payload, map<string|string[]> headers = {}) returns PublicBatchMigrationMapping|error {
+    resource isolated function post idmapping(string[] payload, map<string|string[]> headers = {}) returns PublicBatchMigrationMapping|error {
         string resourcePath = string `/idmapping`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -241,7 +214,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
@@ -251,7 +224,7 @@ public isolated client class Client {
     # + listId - The **ILS ID** of the list to restore
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    remote isolated function putListIdRestoreRestore(string listId, map<string|string[]> headers = {}) returns error? {
+    resource isolated function put [string listId]/restore(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/${getEncodedUri(listId)}/restore`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -268,7 +241,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function putFoldersFolderIdRenameRename(string folderId, map<string|string[]> headers = {}, *PutFoldersFolderIdRenameRenameQueries queries) returns ListFolderFetchResponse|error {
+    resource isolated function put folders/[string folderId]/rename(map<string|string[]> headers = {}, *PutFoldersFolderIdRenameRenameQueries queries) returns ListFolderFetchResponse|error {
         string resourcePath = string `/folders/${getEncodedUri(folderId)}/rename`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -280,13 +253,7 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Fetch List Memberships Ordered by Added to List Date
-    #
-    # + listId - The **ILS ID** of the list
-    # + headers - Headers to be sent with the request 
-    # + queries - Queries to be sent with the request 
-    # + return - successful operation 
-    remote isolated function getListIdMembershipsJoinOrderGetPageOrderedByAddedToListDate(string listId, map<string|string[]> headers = {}, *GetListIdMembershipsJoinOrderGetPageOrderedByAddedToListDateQueries queries) returns ApiCollectionResponseJoinTimeAndRecordId|error {
+    resource isolated function get [string listId]/memberships/join\-order(map<string|string[]> headers = {}, *GetListIdMembershipsJoinOrderGetPageOrderedByAddedToListDateQueries queries) returns ApiCollectionResponseJoinTimeAndRecordId|error {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships/join-order`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -303,7 +270,7 @@ public isolated client class Client {
     # + sourceListId - The **ILS ID** of the *source list* to grab the records from, which are then added to the *destination list*
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    remote isolated function putListIdMembershipsAddFromSourceListIdAddAllFromList(string listId, string sourceListId, map<string|string[]> headers = {}) returns error? {
+    resource isolated function put [string listId]/memberships/add\-from/[string sourceListId](map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships/add-from/${getEncodedUri(sourceListId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -320,7 +287,7 @@ public isolated client class Client {
     # + recordId - Id of the record
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function getRecordsObjectTypeIdRecordIdMembershipsGetLists(string objectTypeId, string recordId, map<string|string[]> headers = {}) returns ApiCollectionResponseRecordListMembershipNoPaging|error {
+    resource isolated function get records/[string objectTypeId]/[string recordId]/memberships(map<string|string[]> headers = {}) returns ApiCollectionResponseRecordListMembershipNoPaging|error {
         string resourcePath = string `/records/${getEncodedUri(objectTypeId)}/${getEncodedUri(recordId)}/memberships`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -335,7 +302,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function getGetAll(map<string|string[]> headers = {}, *GetGetAllQueries queries) returns ListsByIdResponse|error {
+    resource isolated function get .(map<string|string[]> headers = {}, *GetGetAllQueries queries) returns ListsByIdResponse|error {
         string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -351,7 +318,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function postCreate(ListCreateRequest payload, map<string|string[]> headers = {}) returns ListCreateResponse|error {
+    resource isolated function post .(ListCreateRequest payload, map<string|string[]> headers = {}) returns ListCreateResponse|error {
         string resourcePath = string `/`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -359,7 +326,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
@@ -369,7 +336,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function getFoldersGetAll(map<string|string[]> headers = {}, *GetFoldersGetAllQueries queries) returns ListFolderFetchResponse|error {
+    resource isolated function get folders(map<string|string[]> headers = {}, *GetFoldersGetAllQueries queries) returns ListFolderFetchResponse|error {
         string resourcePath = string `/folders`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -384,7 +351,7 @@ public isolated client class Client {
     #
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function postFoldersCreate(ListFolderCreateRequest payload, map<string|string[]> headers = {}) returns ListFolderCreateResponse|error {
+    resource isolated function post folders(ListFolderCreateRequest payload, map<string|string[]> headers = {}) returns ListFolderCreateResponse|error {
         string resourcePath = string `/folders`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -392,7 +359,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
@@ -402,7 +369,7 @@ public isolated client class Client {
     # + folderId -
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    remote isolated function deleteFoldersFolderIdRemove(string folderId, map<string|string[]> headers = {}) returns error? {
+    resource isolated function delete folders/[string folderId](map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/folders/${getEncodedUri(folderId)}`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -418,7 +385,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
-    remote isolated function getListIdMembershipsGetPage(string listId, map<string|string[]> headers = {}, *GetListIdMembershipsGetPageQueries queries) returns ApiCollectionResponseJoinTimeAndRecordId|error {
+    resource isolated function get [string listId]/memberships(map<string|string[]> headers = {}, *GetListIdMembershipsGetPageQueries queries) returns ApiCollectionResponseJoinTimeAndRecordId|error {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -434,7 +401,7 @@ public isolated client class Client {
     # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
     # + headers - Headers to be sent with the request 
     # + return - No content 
-    remote isolated function deleteListIdMembershipsRemoveAll(string listId, map<string|string[]> headers = {}) returns error? {
+    resource isolated function delete [string listId]/memberships(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -449,7 +416,7 @@ public isolated client class Client {
     # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
-    remote isolated function putListIdMembershipsRemoveRemove(string listId, string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
+    resource isolated function put [string listId]/memberships/remove(string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
         string resourcePath = string `/${getEncodedUri(listId)}/memberships/remove`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -457,7 +424,7 @@ public isolated client class Client {
         }
         map<string|string[]> httpHeaders = http:getHeaderMap(headerValues);
         http:Request request = new;
-        json jsonBody = payload.toJson();
+        json jsonBody = jsondata:toJson(payload);
         request.setPayload(jsonBody, "application/json");
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }

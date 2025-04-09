@@ -142,7 +142,7 @@ public type ListsByIdResponse record {
 
 public type PublicNotAllFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
-# Represents the Queries record for the operation: getIdmappingTranslateLegacyListIdToListId
+# Represents the Queries record for the operation: get-/idmapping_translateLegacyListIdToListId
 public type GetIdmappingTranslateLegacyListIdToListIdQueries record {
     # The legacy list id from lists v1 API
     string legacyListId?;
@@ -177,7 +177,7 @@ public type PublicObjectListSearchResult record {
     string updatedAt?;
 };
 
-# Represents the Queries record for the operation: getObjectTypeIdObjectTypeIdNameListNameGetByName
+# Represents the Queries record for the operation: get-/object-type-id/{objectTypeId}/name/{listName}_getByName
 public type GetObjectTypeIdObjectTypeIdNameListNameGetByNameQueries record {
     # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
     boolean includeFilters = false;
@@ -253,7 +253,7 @@ public type PublicNotAllFilterBranch record {
     PublicNotAllFilterBranchFilters[] filters;
 };
 
-# Represents the Queries record for the operation: putListIdUpdateListFiltersUpdateListFilters
+# Represents the Queries record for the operation: put-/{listId}/update-list-filters_updateListFilters
 public type PutListIdUpdateListFiltersUpdateListFiltersQueries record {
     # A flag indicating whether or not the memberships added to the list as a result of the filter change should be enrolled in workflows that are relevant to this list
     boolean enrollObjectsInWorkflows = false;
@@ -370,7 +370,7 @@ public type PublicOrFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFil
 
 public type PublicRestrictedFilterBranchFilters PublicPropertyFilter|PublicAssociationInListFilter|PublicPageViewAnalyticsFilter|PublicCtaAnalyticsFilter|PublicEventAnalyticsFilter|PublicFormSubmissionFilter|PublicFormSubmissionOnPageFilter|PublicIntegrationEventFilter|PublicEmailSubscriptionFilter|PublicCommunicationSubscriptionFilter|PublicCampaignInfluencedFilter|PublicSurveyMonkeyFilter|PublicSurveyMonkeyValueFilter|PublicWebinarFilter|PublicEmailEventFilter|PublicPrivacyAnalyticsFilter|PublicAdsSearchFilter|PublicAdsTimeFilter|PublicInListFilter|PublicNumAssociationsFilter|PublicUnifiedEventsFilter|PublicPropertyAssociationInListFilter|PublicConstantFilter;
 
-# Represents the Queries record for the operation: getListIdMembershipsJoinOrderGetPageOrderedByAddedToListDate
+# Represents the Queries record for the operation: get-/{listId}/memberships/join-order_getPageOrderedByAddedToListDate
 public type GetListIdMembershipsJoinOrderGetPageOrderedByAddedToListDateQueries record {
     # The paging offset token for the page that comes `before` the previously requested records.
     # 
@@ -474,7 +474,7 @@ public type PublicCtaAnalyticsFilter record {
     string operator;
 };
 
-# Represents the Queries record for the operation: getListIdMembershipsGetPage
+# Represents the Queries record for the operation: get-/{listId}/memberships_getPage
 public type GetListIdMembershipsGetPageQueries record {
     # The paging offset token for the page that comes `before` the previously requested records.
     # 
@@ -686,7 +686,7 @@ public type PublicAssociationInListFilter record {
 
 public type PublicRestrictedFilterBranchFilterBranches PublicOrFilterBranch|PublicAndFilterBranch|PublicNotAllFilterBranch|PublicNotAnyFilterBranch|PublicRestrictedFilterBranch|PublicUnifiedEventsFilterBranch|PublicPropertyAssociationFilterBranch|PublicAssociationFilterBranch;
 
-# Represents the Queries record for the operation: putListIdUpdateListNameUpdateName
+# Represents the Queries record for the operation: put-/{listId}/update-list-name_updateName
 public type PutListIdUpdateListNameUpdateNameQueries record {
     # The name to update the list to
     string listName?;
@@ -725,13 +725,13 @@ public type PublicAdsTimeFilter record {
     "ADS_TIME" filterType = "ADS_TIME";
 };
 
-# Represents the Queries record for the operation: getFoldersGetAll
+# Represents the Queries record for the operation: get-/folders_getAll
 public type GetFoldersGetAllQueries record {
     # The Id of the folder to retrieve
     string folderId = "0";
 };
 
-# Represents the Queries record for the operation: getListIdGetById
+# Represents the Queries record for the operation: get-/{listId}_getById
 public type GetListIdGetByIdQueries record {
     # A flag indicating whether or not the response object list definition should include a filter branch definition. By default, object list definitions will not have their filter branch definitions included in the response
     boolean includeFilters = false;
@@ -811,13 +811,13 @@ public type PublicAdsSearchFilter record {
     string operator;
 };
 
-# Represents the Queries record for the operation: putFoldersFolderIdRenameRename
+# Represents the Queries record for the operation: put-/folders/{folderId}/rename_rename
 public type PutFoldersFolderIdRenameRenameQueries record {
     # 
     string newFolderName?;
 };
 
-# Represents the Queries record for the operation: getGetAll
+# Represents the Queries record for the operation: get-/_getAll
 public type GetGetAllQueries record {
     # The **ILS IDs** of the lists to fetch
     string[] listIds?;
