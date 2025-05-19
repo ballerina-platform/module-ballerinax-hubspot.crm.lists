@@ -566,9 +566,7 @@ public type PublicComparativePropertyUpdatedOperation record {
 };
 
 public type MembershipChangeRequest record {
-    # 
     string[] recordIdsToRemove;
-    # 
     string[] recordIdsToAdd;
 };
 
@@ -813,7 +811,6 @@ public type PublicAdsSearchFilter record {
 
 # Represents the Queries record for the operation: putFoldersFolderIdRenameRename
 public type PutFoldersFolderIdRenameRenameQueries record {
-    # 
     string newFolderName?;
 };
 

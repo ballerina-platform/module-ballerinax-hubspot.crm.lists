@@ -199,8 +199,6 @@ public isolated client class Client {
 
     # Moves a folder
     #
-    # + folderId -
-    # + newParentFolderId -
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function putFoldersFolderIdMoveNewParentFolderIdMove(string folderId, string newParentFolderId, map<string|string[]> headers = {}) returns ListFolderFetchResponse|error {
@@ -265,7 +263,6 @@ public isolated client class Client {
 
     # Rename a folder
     #
-    # + folderId -
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
@@ -400,7 +397,6 @@ public isolated client class Client {
 
     # Deletes a folder
     #
-    # + folderId -
     # + headers - Headers to be sent with the request 
     # + return - No content 
     remote isolated function deleteFoldersFolderIdRemove(string folderId, map<string|string[]> headers = {}) returns error? {
