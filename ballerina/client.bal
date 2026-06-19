@@ -23,7 +23,7 @@ import ballerina/http;
 public isolated client class Client {
     final http:Client clientEp;
     final readonly & ApiKeysConfig? apiKeyConfig;
-    # Gets invoked to initialize the `connector`.
+    # Gets invoked to initialize the `connector`
     #
     # + config - The configurations to be used when initializing the `connector` 
     # + serviceUrl - URL of the target service 
@@ -59,7 +59,8 @@ public isolated client class Client {
 
     # Add and/or Remove Records from a List
     #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
+    # + listId - The **ILS ID** of the _MANUAL_ or _SNAPSHOT_ list
+    # + payload - A membership change request 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function putListIdMembershipsAddAndRemoveAddAndRemove(string listId, MembershipChangeRequest payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
@@ -110,6 +111,7 @@ public isolated client class Client {
     # Update List Filter Definition
     #
     # + listId - The **ILS ID** of the list to update
+    # + payload - A list filter update request 
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
@@ -129,6 +131,7 @@ public isolated client class Client {
 
     # Search Lists
     #
+    # + payload - A list search request 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function postSearchDoSearch(ListSearchRequest payload, map<string|string[]> headers = {}) returns ListSearchResponse|error {
@@ -146,6 +149,7 @@ public isolated client class Client {
 
     # Moves a list to a given folder
     #
+    # + payload - A list move request 
     # + headers - Headers to be sent with the request 
     # + return - No content 
     remote isolated function putFoldersMoveListMoveList(ListMoveRequest payload, map<string|string[]> headers = {}) returns error? {
@@ -163,7 +167,8 @@ public isolated client class Client {
 
     # Add Records to a List
     #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
+    # + listId - The **ILS ID** of the _MANUAL_ or _SNAPSHOT_ list
+    # + payload - A list of string values 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function putListIdMembershipsAddAdd(string listId, string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {
@@ -182,7 +187,7 @@ public isolated client class Client {
     # Fetch List by Name
     #
     # + listName - The name of the list to fetch. This is **not** case sensitive
-    # + objectTypeId - The object type ID of the object types stored by the list to fetch. For example, `0-1` for a `CONTACT` list
+    # + objectTypeId - The object type ID of the object types stored by the list to fetch. For example, _0-1_ for a _CONTACT_ list
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
@@ -199,6 +204,8 @@ public isolated client class Client {
 
     # Moves a folder
     #
+    # + folderId - The unique identifier of the folder to be moved
+    # + newParentFolderId - The unique identifier of the destination parent folder
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function putFoldersFolderIdMoveNewParentFolderIdMove(string folderId, string newParentFolderId, map<string|string[]> headers = {}) returns ListFolderFetchResponse|error {
@@ -212,7 +219,7 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Translate Legacy List Id to Modern List Id
+    # Translate legacy list ID to modern ID
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -228,8 +235,9 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Translate Legacy List Id to Modern List Id in Batch
+    # Batch translate legacy list IDs
     #
+    # + payload - A list of string values 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function postIdmappingTranslateLegacyListIdToListIdBatch(string[] payload, map<string|string[]> headers = {}) returns PublicBatchMigrationMapping|error {
@@ -263,6 +271,7 @@ public isolated client class Client {
 
     # Rename a folder
     #
+    # + folderId - The unique identifier of the folder to be renamed
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - successful operation 
@@ -278,7 +287,7 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
-    # Fetch List Memberships Ordered by Added to List Date
+    # Get memberships by join date
     #
     # + listId - The **ILS ID** of the list
     # + headers - Headers to be sent with the request 
@@ -295,9 +304,9 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
-    # Add All Records from a Source List to a Destination List
+    # Add all records from source list
     #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` *destination list*, which the *source list* records are added to
+    # + listId - The **ILS ID** of the _MANUAL_ or _SNAPSHOT_ *destination list*, which the *source list* records are added to
     # + sourceListId - The **ILS ID** of the *source list* to grab the records from, which are then added to the *destination list*
     # + headers - Headers to be sent with the request 
     # + return - No content 
@@ -347,6 +356,7 @@ public isolated client class Client {
 
     # Create List
     #
+    # + payload - A list create request 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function postCreate(ListCreateRequest payload, map<string|string[]> headers = {}) returns ListCreateResponse|error {
@@ -362,7 +372,7 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
-    # Retrieves a folder.
+    # Retrieves a folder
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -380,6 +390,7 @@ public isolated client class Client {
 
     # Creates a folder
     #
+    # + payload - A list folder create request 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function postFoldersCreate(ListFolderCreateRequest payload, map<string|string[]> headers = {}) returns ListFolderCreateResponse|error {
@@ -397,6 +408,7 @@ public isolated client class Client {
 
     # Deletes a folder
     #
+    # + folderId - The unique identifier of the folder to be deleted
     # + headers - Headers to be sent with the request 
     # + return - No content 
     remote isolated function deleteFoldersFolderIdRemove(string folderId, map<string|string[]> headers = {}) returns error? {
@@ -428,7 +440,7 @@ public isolated client class Client {
 
     # Delete All Records from a List
     #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
+    # + listId - The **ILS ID** of the _MANUAL_ or _SNAPSHOT_ list
     # + headers - Headers to be sent with the request 
     # + return - No content 
     remote isolated function deleteListIdMembershipsRemoveAll(string listId, map<string|string[]> headers = {}) returns error? {
@@ -443,7 +455,8 @@ public isolated client class Client {
 
     # Remove Records from a List
     #
-    # + listId - The **ILS ID** of the `MANUAL` or `SNAPSHOT` list
+    # + listId - The **ILS ID** of the _MANUAL_ or _SNAPSHOT_ list
+    # + payload - A list of string values 
     # + headers - Headers to be sent with the request 
     # + return - successful operation 
     remote isolated function putListIdMembershipsRemoveRemove(string listId, string[] payload, map<string|string[]> headers = {}) returns MembershipsUpdateResponse|error {

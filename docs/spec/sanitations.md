@@ -1,6 +1,6 @@
 _Author_:  @sajitha-tj \
 _Created_: 2025/01/03 \
-_Updated_: 2025/01/09 \
+_Updated_: 2026/06/18 \
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -8,7 +8,6 @@ _Edition_: Swan Lake
 This document records the sanitation done on top of the official OpenAPI specification from HubSpot CRM Lists. 
 The OpenAPI specification is obtained from [HubSpot CRM Lists API specification](https://github.com/HubSpot/HubSpot-public-api-spec-collection/blob/main/PublicApiSpecs/CRM/Lists/Rollouts/144891/v3/lists.json).
 These changes are done in order to improve the overall usability, and as workarounds for some known language limitations.
-
 
 1. **Change the `url`property of the `servers` object**:
     - **Original**: `https://api.hubapi.com`
@@ -45,7 +44,6 @@ These changes are done in order to improve the overall usability, and as workaro
     ```
     - **Reason**: Although the API specifications says these feilds are required, the endpoint does not return all three fields `recordIdsMissing`, `recordIdsRemoved`, `recordsIdsAdded` for every request. This leads to a Payload Binding Error (`PayloadBindingClientError`). Removing these from required list ensures correct generation of connector client.
 
-
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
@@ -54,4 +52,3 @@ The following command was used to generate the Ballerina client from the OpenAPI
 bal openapi -i docs/spec/openapi.yaml --mode client --client-methods remote --license docs/license.txt -o ballerina
 ```
 Note: The license year is hardcoded to 2024, change if necessary.
-
