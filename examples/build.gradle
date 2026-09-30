@@ -17,9 +17,12 @@
  */
 
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.api.internal.project.ProjectInternal
+import org.gradle.process.ExecOperations
 
 apply plugin: 'java'
 
+def execOperations = ((ProjectInternal) project).services.get(ExecOperations)
 def graalvmFlag = ""
 
 task testExamples {
@@ -28,7 +31,7 @@ task testExamples {
     }
     doLast {
         try {
-            exec {
+            execOperations.exec {
                 workingDir project.projectDir
                 println("Working dir: ${workingDir}")
                 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
@@ -54,7 +57,7 @@ task buildExamples {
     }
     doLast {
         try {
-            exec {
+            execOperations.exec {
                 workingDir project.projectDir
                 println("Working dir: ${workingDir}")
                 if (Os.isFamily(Os.FAMILY_WINDOWS)) {
